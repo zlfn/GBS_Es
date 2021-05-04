@@ -11,14 +11,14 @@
         android:id="@+id/scv" >
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:layout_marginHorizontal="20dp"
             android:orientation="vertical">
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textSize="24dp"
+                android:textSize="24sp"
                 android:text="자가진단 하러가기"
                 android:id="@+id/sckBtn" />
 
@@ -35,7 +35,7 @@
                 android:text="자습실 신청하기"
                 android:gravity="center"
                 android:layout_gravity="center"
-                android:textSize="24dp" />
+                android:textSize="24sp" />
 
             <TableLayout
                 android:layout_width="match_parent"
