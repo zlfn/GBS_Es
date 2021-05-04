@@ -1,16 +1,23 @@
 package com.dayo.executer
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.ScrollView
+import android.widget.Toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import org.jsoup.Jsoup
 
 class MainActivity : AppCompatActivity() {
 
+    public var vifo = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -23,5 +30,14 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_home, R.id.navigation_setting, R.id.navigation_legacy))
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        CoroutineScope(Dispatchers.Default).launch {
+            val doc = Jsoup.connect("http://34.70.245.122/version.html").get()
+            vifo = doc.body().text()
+            Log.d("asdf", vifo) //ablr asck ex
+        }
+
+        Toast.makeText(this, "버전 정보를 불러오고 있습니다.", Toast.LENGTH_SHORT).show()
+
     }
 }

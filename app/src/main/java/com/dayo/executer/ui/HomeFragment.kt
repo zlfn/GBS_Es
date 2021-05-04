@@ -28,7 +28,6 @@ class HomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -47,16 +46,18 @@ class HomeFragment : Fragment() {
             else if (oldScrollY + 10 < scrollY)
                 nav.visibility = View.VISIBLE
         }
-
+/*
         var vifo = ""
         CoroutineScope(Dispatchers.Default).launch {
             val doc = Jsoup.connect("http://34.70.245.122/version.html").get()
             vifo = doc.body().text() //ablr asck ex
         }
-        while (vifo == "") {
+
+ */
+        while (m.vifo == "") {
             Thread.sleep(1)
         }
-        if ((activity as MainActivity).packageManager.getPackageInfo("com.dayo.executer", PackageManager.GET_ACTIVITIES).versionName != vifo.split(' ')[2]) {
+        if ((activity as MainActivity).packageManager.getPackageInfo("com.dayo.executer", PackageManager.GET_ACTIVITIES).versionName != m.vifo.split(' ')[2]) {
             Toast.makeText(activity, "업데이트가 필요합니다.", Toast.LENGTH_LONG).show()
         }
 
@@ -65,13 +66,13 @@ class HomeFragment : Fragment() {
             val strAppPackage = "com.dayo.asck"
             val pkg = (activity as MainActivity).packageManager.getPackageInfo(strAppPackage, PackageManager.GET_ACTIVITIES);
 
-            while (vifo == "") {
+            while (m.vifo == "") {
                 Thread.sleep(1)
             }
-            if (pkg.versionName!! != vifo.split(' ')[1].replace("b", "beta ")) {
+            if (pkg.versionName!! != m.vifo.split(' ')[1].replace("b", "beta ")) {
                 asckBtn?.text = "자가진단 하러가기(플러그인 업데이트 필요)"
                 Log.d("asdf", pkg.versionName)
-                Log.d("asdf", vifo.split(' ')[1].replace("b", "beta "))
+                Log.d("asdf", m.vifo.split(' ')[1].replace("b", "beta "))
             }
             asckBtn?.setOnClickListener {
                 val cn = ComponentName("com.dayo.asck", "com.dayo.asck.MainActivity")
