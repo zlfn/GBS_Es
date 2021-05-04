@@ -24,7 +24,13 @@
 
 ## File Explanation
 
- -
+ 1. com.dayo.executer.ui
+   - HomeFragment.kt: Which fragment will displays first
+   - SettingsFragment.kt: Which fragment allows user to edit settings
+
+ 2. com.dayo.executer
+   - MainActivity.kt: Which activity displays first
+   - ~lgs_MainActivity.kt (Deprecated): Which activity used by old version~
 
 
 ## Server side Launcher logic
