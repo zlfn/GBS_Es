@@ -49,4 +49,5 @@
  - Launcher: Kotlin
 
 ## Developer
+ - Every dev or designer need to edit this part yourself
  - Dayo
