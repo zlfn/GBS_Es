@@ -16,7 +16,7 @@
  - Server side program develop
  - UI/UX
  - 분실물 찾기 fragment develop
- - 자가진단, 학습실 신청, 수행평가 관련 알림 푸시(w. GCP)
+ - 자가진단, 학습실 신청, 수행평가 관련 알림 푸시(w. GCP, FCM)
 
 ### Deprecated
 
