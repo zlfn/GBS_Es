@@ -47,3 +47,6 @@
 
 ## Client side Launcher logic
  - Launcher: Kotlin
+
+## Developer
+ - Dayo
