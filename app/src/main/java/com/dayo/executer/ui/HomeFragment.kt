@@ -91,6 +91,7 @@ class HomeFragment : Fragment() {
             asckBtn?.isEnabled = false
         }
         Log.d("asdf", "http://34.70.245.122/timetable/101/${SimpleDateFormat("yyyy-MM-dd").format(Date())}.html")
+
         var tableData = "9:10~10:00 영어 서원화 암것도_없음 10:10~11:00 국어 전은선 수행_없음"
         /*
         CoroutineScope(Dispatchers.Default).launch {
@@ -190,7 +191,7 @@ class HomeFragment : Fragment() {
         init {
             timeInfo.text = tii
             subjectInfo.text = subi
-            timeInfo.text = ti
+            tInfo.text = ti
             elseInfo.text = ei
         }
     }
