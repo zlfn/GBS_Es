@@ -1,17 +1,32 @@
 현재 개발중인 버전입니다.
 
-tableData 및 ablrData는 테스트용 데이터가 임시로 삽입된 상태입니다.
-추후에 tableData는 GCP 연동을 통해 개선 예정이며 ablrData는 sharedPref로 개선할 예정입니다.
-GCP 연동 코드도 현재 삽입된 상태이며, 주석처리되있습니다.
 
-현재 앱 빌드 후 설치시 이름이 MainActivity로 나옵니다. 추후 수정 예정입니다.
+진행상황
 
-GCP Server: 34.70.245.122
-현재 34.70.245.122/version.html을 제외한 모든 파일은 생성되지 않은 상태입니다.
+완료
+
+ - 기본 UI 제작
+ - 자가진단 자동화 플러그인과의 연동
+ - 학습실 신청 자동화 프로그램 API 제작
+ - 기초적인 display 기능
+
+진행 예정
+
+ - 학습실 신청 자동화 플러그인과의 연동
+ - 학습실 다중신청 자동화
+ - Server side program develop
+ - UI/UX
+ - 분실물 찾기 fragment develop
+
+삭제 예정
+
+ - 구런쳐 이동 기능: 신런쳐의 완성도 상승시 삭제 예정. 관련 코드는 lgs_MainActivity.kt에 존재
+
 
 Server side Launcher logic:
 Parse Data from comsi.kr: node.js
 Open server: Apache Web Server
+
 
 Client side Launcher logic:
 Launcher:
