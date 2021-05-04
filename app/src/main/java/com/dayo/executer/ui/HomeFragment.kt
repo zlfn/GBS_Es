@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.view.get
 import com.dayo.executer.MainActivity
 import com.dayo.executer.R
 import com.dayo.executer.data.AblrData
@@ -66,8 +67,6 @@ class HomeFragment : Fragment() {
             }
             if (pkg.versionName!! != m.vifo.split(' ')[1].replace("b", "beta ")) {
                 asckBtn?.text = "자가진단 하러가기(플러그인 업데이트 필요)"
-                Log.d("asdf", pkg.versionName)
-                Log.d("asdf", m.vifo.split(' ')[1].replace("b", "beta "))
             }
             asckBtn?.setOnClickListener {
                 val cn = ComponentName("com.dayo.asck", "com.dayo.asck.MainActivity")
@@ -80,15 +79,12 @@ class HomeFragment : Fragment() {
             asckBtn?.text = "플러그인 설치가 필요합니다."
             asckBtn?.isEnabled = false
         }
-        Log.d("asdf", "http://34.70.245.122/timetable/101/${SimpleDateFormat("yyyy-MM-dd").format(Date())}.html")
 
-        //var tableData = "9:10~10:00 영어 서원화 어학실2 암것도_없음 10:10~11:00 국어 전은선 304 수행_없음"
+        //var tableData = "9:10~10:00 영어 서원화 어학실2 암것도_없음 10:10~11:00 국어 전은선 304 수행_없음" => Format
         var tableData = ""
         CoroutineScope(Dispatchers.Default).launch {
             //val doc = Jsoup.connect("http://34.70.245.122/timetable/101/${SimpleDateFormat("yyyy-MM-dd").format(Date())}.html").get()
             val doc = Jsoup.connect("http://34.70.245.122/timetable/101/2021-05-04.html").get()
-
-            Log.d("asdf", doc.html())
             tableData = doc.body().text()
         }
         while (tableData == "") {
@@ -106,7 +102,7 @@ class HomeFragment : Fragment() {
                     elseInfo = tableParsedData[i + 4].replace('_', ' '))).getRow())
         }
 
-        var ablrData = "18 50 19 40 학습실 19 50 20 40 학습실 20 50 21 30 학습실 21 40 23 59 동아리_활동"
+        var ablrData = "18 50 19 40 학습실 19 50 20 40 학습실 20 50 21 30 학습실 21 40 23 59 동아리_활동" // => Format
         val ablrParsedData = ablrData.split(' ')
         val ablrTable = view?.findViewById<TableLayout>(R.id.ablrTable)
         ablrTable?.removeAllViews()
@@ -127,21 +123,21 @@ class HomeFragment : Fragment() {
         initUI()
     }
 
-    class AblrTableRow(context: Context, ablrData: AblrData): TableRow(context) {
+    class AblrTableRow(context: Context, val ablrData: AblrData): TableRow(context) {
         var timeInfo: TextView = TextView(context)
         var subjectInfo: TextView = TextView(context)
-        private lateinit var tableRow: TableRow
 
         private fun addView() {
-            tableRow = TableRow(context)
-            tableRow.addView(timeInfo)
-            tableRow.addView(subjectInfo)
+            super.addView(timeInfo)
+            super.addView(subjectInfo)
         }
 
-        fun getRow(): TableRow {
+        fun getRow(): AblrTableRow {
             addView()
-            return tableRow
+            return this
         }
+
+        fun getData(): AblrData = ablrData
 
         init {
             timeInfo.text = ablrData.getFullTime()
@@ -149,27 +145,27 @@ class HomeFragment : Fragment() {
         }
     }
 
-    class TimeTableRow(context: Context, timeTableData: TimeTableData): TableRow(context) {
+    class TimeTableRow(context: Context, val timeTableData: TimeTableData): TableRow(context) {
         var timeInfo: TextView = TextView(context)
         var subjectInfo: TextView = TextView(context)
         var tInfo: TextView = TextView(context)
         var elseInfo: TextView = TextView(context)
         var roomInfo: TextView = TextView(context)
-        private lateinit var tableRow: TableRow
 
         private fun addView() {
-            tableRow = TableRow(context)
-            tableRow.addView(timeInfo)
-            tableRow.addView(subjectInfo)
-            tableRow.addView(tInfo)
-            tableRow.addView(roomInfo)
-            tableRow.addView(elseInfo)
+            super.addView(timeInfo)
+            super.addView(subjectInfo)
+            super.addView(tInfo)
+            super.addView(roomInfo)
+            super.addView(elseInfo)
         }
 
-        fun getRow(): TableRow {
+        fun getRow(): TimeTableRow {
             addView()
-            return tableRow
+            return this
         }
+
+        fun getData(): TimeTableData = timeTableData
 
         init {
             timeInfo.text = timeTableData.timeInfo
