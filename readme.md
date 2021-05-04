@@ -24,13 +24,18 @@
 
 ## File Explanation
 
- 1. com.dayo.executer.ui
-
+### 1. com.dayo.executer.ui
+#### Created Activity / fragment
    - This fragments are called by navigation bar
-   - HomeFragment.kt: Which fragment will displays first(call by default fragment in bottom navigation bar)
-   - SettingsFragment.kt: Which fragment allows user to edit settings
+   - HomeFragment.kt: Fragment which will displays first(call by default fragment in bottom navigation bar)
+   - SettingsFragment.kt: Fragment which allows user to edit settings
+#### Not Created Activity / fragment
+   - FindLostThingsFragment.kt: 분실물 찾기 fragment
+   - EditAblrListFragment.kt: Fragment which makes ablr list editable
 
- 2. com.dayo.executer
+
+### 2. com.dayo.executer
+#### Created
    - MainActivity.kt: Which activity displays first
    - ~lgs_MainActivity.kt (Deprecated): Which activity used by old version~
 
