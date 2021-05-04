@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.dayo.executer.ui.HomeFragment"
+        android:label="Home" />
+
+    <fragment
+        android:id="@+id/navigation_setting"
+        android:name="com.dayo.executer.ui.SettingsFragment"
+        android:label="설정" />
+
+    <activity
+        android:id="@+id/navigation_legacy"
+        android:name="com.dayo.executer.lgs_MainActivity"
+        android:label="구런쳐"
+        tools:layout="@layout/lgs_activity_main" />
+</navigation>
