@@ -26,7 +26,7 @@
 
  1. com.dayo.executer.ui
 
- This fragments are called by navigation bar
+   - This fragments are called by navigation bar
    - HomeFragment.kt: Which fragment will displays first(call by default fragment in bottom navigation bar)
    - SettingsFragment.kt: Which fragment allows user to edit settings
 
