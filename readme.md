@@ -1,7 +1,7 @@
 현재 개발중인 버전입니다.
 ==========================
 
-## 진행 상황
+## Feature development info
 ### 완료
 
  - 기본 UI 제작
@@ -20,7 +20,7 @@
 
 ### Deprecated
 
- - 구런쳐 이동 기능: 신런쳐의 완성도 상승시 삭제 예정. 관련 코드는 lgs_MainActivity.kt에 존재
+ - Feature which makes able to move legacy launcher: 신런쳐의 완성도 상승시 삭제 예정. 관련 코드는 lgs_MainActivity.kt에 존재
 
 ## File Explanation
 
