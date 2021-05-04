@@ -1,14 +1,10 @@
 package com.dayo.executer.ui
 
-import android.annotation.SuppressLint
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Color
-import android.icu.text.MessageFormat.format
 import android.icu.text.SimpleDateFormat
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -16,7 +12,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.appcompat.app.AlertDialog
 import com.dayo.executer.MainActivity
 import com.dayo.executer.R
 import kotlinx.coroutines.CoroutineScope
@@ -56,7 +51,6 @@ class HomeFragment : Fragment() {
         var vifo = ""
         CoroutineScope(Dispatchers.Default).launch {
             val doc = Jsoup.connect("http://34.70.245.122/version.html").get()
-            //Log.d("asdf", doc.html())
             vifo = doc.body().text() //ablr asck ex
         }
         while (vifo == "") {
