@@ -14,6 +14,8 @@ import android.view.ViewGroup
 import android.widget.*
 import com.dayo.executer.MainActivity
 import com.dayo.executer.R
+import com.dayo.executer.data.AblrData
+import com.dayo.executer.data.TimeTableData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -46,14 +48,7 @@ class HomeFragment : Fragment() {
             else if (oldScrollY + 10 < scrollY)
                 nav.visibility = View.VISIBLE
         }
-/*
-        var vifo = ""
-        CoroutineScope(Dispatchers.Default).launch {
-            val doc = Jsoup.connect("http://34.70.245.122/version.html").get()
-            vifo = doc.body().text() //ablr asck ex
-        }
-
- */
+        //Wait for INIT vifo
         while (m.vifo == "") {
             Thread.sleep(1)
         }
@@ -87,51 +82,42 @@ class HomeFragment : Fragment() {
         }
         Log.d("asdf", "http://34.70.245.122/timetable/101/${SimpleDateFormat("yyyy-MM-dd").format(Date())}.html")
 
-        var tableData = "9:10~10:00 영어 서원화 암것도_없음 10:10~11:00 국어 전은선 수행_없음"
-        /*
+        //var tableData = "9:10~10:00 영어 서원화 어학실2 암것도_없음 10:10~11:00 국어 전은선 304 수행_없음"
+        var tableData = ""
         CoroutineScope(Dispatchers.Default).launch {
-            val doc = Jsoup.connect("http://34.70.245.122/timetable/101/${SimpleDateFormat("yyyy-MM-dd").format(Date())}.html").get()
+            //val doc = Jsoup.connect("http://34.70.245.122/timetable/101/${SimpleDateFormat("yyyy-MM-dd").format(Date())}.html").get()
+            val doc = Jsoup.connect("http://34.70.245.122/timetable/101/2021-05-04.html").get()
+
             Log.d("asdf", doc.html())
-            tableData = doc.body().text() //time sub t something<br>
+            tableData = doc.body().text()
         }
         while (tableData == "") {
             Thread.sleep(1)
         }
-         */
         val tableParsedData = tableData.split(' ')
         val timeTable = view?.findViewById<TableLayout>(R.id.timeTable)
         timeTable?.removeAllViews()
-        for (i in tableParsedData.indices step (4)) {
-            val x = TimeTableRow(activity?.applicationContext!!,
-                    tableParsedData[i].replace('_', ' '),
-                    tableParsedData[i + 1].replace('_', ' '),
-                    tableParsedData[i + 2].replace('_', ' '),
-                    tableParsedData[i + 3].replace('_', ' '))
-            timeTable?.addView(x.getRow())
+        for (i in tableParsedData.indices step (5)) {
+            timeTable?.addView(TimeTableRow(activity?.applicationContext!!,TimeTableData(
+                    timeInfo = tableParsedData[i].replace('_', ' '),
+                    subjectInfo = tableParsedData[i + 1].replace('_', ' '),
+                    teacherInfo = tableParsedData[i + 2].replace('_', ' '),
+                    roomInfo = tableParsedData[i + 3].replace('_', ' '),
+                    elseInfo = tableParsedData[i + 4].replace('_', ' '))).getRow())
         }
 
         var ablrData = "18 50 19 40 학습실 19 50 20 40 학습실 20 50 21 30 학습실 21 40 23 59 동아리_활동"
-        /*
-        CoroutineScope(Dispatchers.Default).launch {
-            val doc = Jsoup.connect("http://34.70.245.122/timetable/101/${SimpleDateFormat("yyyy-MM-dd").format(Date())}.html").get()
-            Log.d("asdf", doc.html())
-            tableData = doc.body().text() //time sub t something<br>
-        }
-        while (tableData == "") {
-            Thread.sleep(1)
-        }
-         */
         val ablrParsedData = ablrData.split(' ')
         val ablrTable = view?.findViewById<TableLayout>(R.id.ablrTable)
         ablrTable?.removeAllViews()
         for (i in ablrParsedData.indices step (5)) {
-            val x = AblrTableRow(activity?.applicationContext!!,
-                    ablrParsedData[i].replace('_', ' '),
-                    ablrParsedData[i + 1].replace('_', ' '),
-                    ablrParsedData[i + 2].replace('_', ' '),
-                    ablrParsedData[i + 3].replace('_', ' '),
-                    ablrParsedData[i + 4].replace('_', ' '))
-            ablrTable?.addView(x.getRow())
+            ablrTable?.addView(AblrTableRow(activity?.applicationContext!!, AblrData(
+                    sth = ablrParsedData[i].replace('_', ' '),
+                    stm = ablrParsedData[i + 1].replace('_', ' '),
+                    eth = ablrParsedData[i + 2].replace('_', ' '),
+                    etm = ablrParsedData[i + 3].replace('_', ' '),
+                    locationInfo = ablrParsedData[i + 4].replace('_', ' ')
+            )).getRow())
         }
     }
 
@@ -141,7 +127,7 @@ class HomeFragment : Fragment() {
         initUI()
     }
 
-    class AblrTableRow(context: Context, sth: String, stm: String, eth: String, etm: String, tii: String): TableRow(context){
+    class AblrTableRow(context: Context, ablrData: AblrData): TableRow(context) {
         var timeInfo: TextView = TextView(context)
         var subjectInfo: TextView = TextView(context)
         private lateinit var tableRow: TableRow
@@ -152,22 +138,23 @@ class HomeFragment : Fragment() {
             tableRow.addView(subjectInfo)
         }
 
-        fun getRow(): TableRow{
+        fun getRow(): TableRow {
             addView()
             return tableRow
         }
 
-        init{
-            timeInfo.text = "$sth:$stm ~ $eth:$etm"
-            subjectInfo.text = tii
+        init {
+            timeInfo.text = ablrData.getFullTime()
+            subjectInfo.text = ablrData.locationInfo
         }
     }
 
-    class TimeTableRow(context: Context, tii: String, subi: String, ti: String, ei: String) : TableRow(context) {
+    class TimeTableRow(context: Context, timeTableData: TimeTableData): TableRow(context) {
         var timeInfo: TextView = TextView(context)
         var subjectInfo: TextView = TextView(context)
         var tInfo: TextView = TextView(context)
         var elseInfo: TextView = TextView(context)
+        var roomInfo: TextView = TextView(context)
         private lateinit var tableRow: TableRow
 
         private fun addView() {
@@ -175,6 +162,7 @@ class HomeFragment : Fragment() {
             tableRow.addView(timeInfo)
             tableRow.addView(subjectInfo)
             tableRow.addView(tInfo)
+            tableRow.addView(roomInfo)
             tableRow.addView(elseInfo)
         }
 
@@ -184,10 +172,11 @@ class HomeFragment : Fragment() {
         }
 
         init {
-            timeInfo.text = tii
-            subjectInfo.text = subi
-            tInfo.text = ti
-            elseInfo.text = ei
+            timeInfo.text = timeTableData.timeInfo
+            subjectInfo.text = timeTableData.subjectInfo
+            tInfo.text = timeTableData.teacherInfo
+            elseInfo.text = timeTableData.elseInfo
+            roomInfo.text = timeTableData.roomInfo
         }
     }
 }
