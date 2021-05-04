@@ -35,7 +35,7 @@
 
 
 ### 2. com.dayo.executer
-#### Created
+#### Created Activity
    - MainActivity.kt: Which activity displays first
    - ~lgs_MainActivity.kt (Deprecated): Which activity used by old version~
 
