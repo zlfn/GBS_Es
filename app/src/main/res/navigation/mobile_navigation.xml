@@ -11,6 +11,10 @@
         android:label="Home" />
 
     <fragment
+        android:id="@+id/navigation_weekly"
+        android:label="Weekly" />
+
+    <fragment
         android:id="@+id/navigation_lost_thing"
         android:name="com.dayo.executer.ui.LostThingInfoFragment"
         android:label="분실물" />

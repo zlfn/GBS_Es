@@ -18,6 +18,7 @@
  - 분실물 찾기 fragment develop
  - 자가진단, 학습실 신청, 수행평가 관련 알림 푸시(w. GCP, FCM)
  - Crawl meal data in https://gbs.hs.kr
+ - Create setting fragment(fragment exist but that has no action)
 
 ### Deprecated
 
