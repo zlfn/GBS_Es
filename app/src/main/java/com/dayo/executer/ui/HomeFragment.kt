@@ -33,12 +33,6 @@ class HomeFragment : Fragment() {
     lateinit var m: MainActivity
     lateinit var nav: View
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
@@ -74,7 +68,7 @@ class HomeFragment : Fragment() {
 
         try {
             val strAppPackage = "com.dayo.asck"
-            val pkg = (activity as MainActivity).packageManager.getPackageInfo(strAppPackage, PackageManager.GET_ACTIVITIES);
+            val pkg = (activity as MainActivity).packageManager.getPackageInfo(strAppPackage, PackageManager.GET_ACTIVITIES)
 
             while (m.vifo == "") {
                 Thread.sleep(1)
