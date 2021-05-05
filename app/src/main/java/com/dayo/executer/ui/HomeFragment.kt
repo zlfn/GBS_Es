@@ -81,7 +81,14 @@ class HomeFragment : Fragment() {
                 val intent = Intent(Intent.ACTION_MAIN)
                 intent.addCategory(Intent.CATEGORY_LAUNCHER)
                 intent.component = cn
-                if(DataManager.asckPW!="") intent.putExtra("pw", DataManager.asckPW)
+                if(DataManager.asckPW!="") {
+                    intent.putExtra("pw", DataManager.asckPW)
+                    if(DataManager.asckUseAdvOpt){
+                        intent.putExtra("dt", DataManager.asckDt)
+                        intent.putExtra("dsel", DataManager.asckDsel)
+                        intent.putExtra("ds", DataManager.asckDs)
+                    }
+                }
                 startActivity(intent)
             }
         } catch (e: PackageManager.NameNotFoundException) {

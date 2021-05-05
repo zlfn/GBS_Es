@@ -19,12 +19,21 @@ class DataManager {
         var asckPW = ""
         var classInfo = ""
 
+        var asckDt = 0L
+        var asckDsel = 0L
+        var asckDs = 0L
+        var asckUseAdvOpt = false
+
         fun saveSettings() {
             sharedPref.edit {
                 putString("ablrID", ablrID)
                 putString("ablrPW", ablrPW)
                 putString("asckPW", asckPW)
                 putString("classInfo", classInfo)
+                putLong("asckDt", asckDt)
+                putLong("asckDsel", asckDsel)
+                putLong("asckDs", asckDs)
+                putBoolean("asckUseAdvOpt", asckUseAdvOpt)
                 apply()
             }
         }
@@ -49,6 +58,10 @@ class DataManager {
             ablrPW = sharedPref.getString("ablrPW", "")!!
             asckPW = sharedPref.getString("asckPW", "")!!
             classInfo = sharedPref.getString("classInfo", "1-1")!!
+            asckDt = sharedPref.getLong("asckDt", 10L)
+            asckDsel = sharedPref.getLong("asckDsel", 1500L)
+            asckDs = sharedPref.getLong("asckDs", 1000L)
+            asckUseAdvOpt = sharedPref.getBoolean("asckUseAdvOpt", false)
         }
     }
 }

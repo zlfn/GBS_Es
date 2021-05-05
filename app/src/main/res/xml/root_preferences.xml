@@ -24,5 +24,29 @@
             app:title="비밀번호"
             app:key="asckPW"
             app:summary="자가진단할때 사용하는 비밀번호를 입력하세요." />
+
+        <SwitchPreference
+            app:title="Use advanced options"
+            app:defaultValue="false"
+            app:key="asckAdv" />
+
+        <EditTextPreference
+            app:title="dt"
+            app:dependency="asckAdv"
+            app:summary="Delay time in automatic self check logic"
+            app:key="dt" />
+
+        <EditTextPreference
+            app:title="dsel"
+            app:dependency="asckAdv"
+            app:summary="Delay time in automatic self check selection logic"
+            app:key="dsel" />
+
+        <EditTextPreference
+            app:title="ds"
+            app:dependency="asckAdv"
+            app:summary="Delay time in automatic self check logic starts"
+            app:key="ds" />
+
     </PreferenceCategory>
 </PreferenceScreen>
