@@ -58,22 +58,6 @@ class HomeFragment : Fragment() {
         timeTable?.removeAllViews()
         ablrTable?.removeAllViews()
 
-        view?.findViewById<Button>(R.id.testBtn)?.setOnClickListener {
-            val cn = ComponentName("com.dayo.ablr", "com.dayo.ablr.AddNewActivity")
-            val intent = Intent(Intent.ACTION_MAIN)
-            intent.addCategory(Intent.CATEGORY_LAUNCHER)
-            intent.component = cn
-            intent.putExtra("plc", "note1")
-            intent.putExtra("sth", "13")
-            intent.putExtra("stm", "23")
-            intent.putExtra("eth", "23")
-            intent.putExtra("etm", "33")
-            intent.putExtra("id", "testID")
-            intent.putExtra("pw", "testPW") //TODO: Replace it to your ID and Password
-            startActivity(intent)
-
-        }   //This code is test for connection of ABLR and HomeFragment
-
         sv?.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
             if (oldScrollY - 10 > scrollY)
                 nav.visibility = View.INVISIBLE

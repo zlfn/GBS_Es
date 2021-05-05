@@ -27,8 +27,5 @@ class LostThingInfoFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        view?.findViewById<Button>(R.id.testBtn2)?.setOnClickListener {
-            Log.e("asdf", (view?.findViewById<TableLayout>(R.id.timeTable)!![0] as HomeFragment.TimeTableRow).getData().toString())
-        }
     }
 }
