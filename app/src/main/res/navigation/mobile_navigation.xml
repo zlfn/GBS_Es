@@ -12,6 +12,7 @@
 
     <fragment
         android:id="@+id/navigation_weekly"
+        android:name="com.dayo.executer.ui.WeeklyFragment"
         android:label="Weekly" />
 
     <fragment
