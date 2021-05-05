@@ -1,6 +1,8 @@
 package com.dayo.executer.ui
 
 import android.os.Bundle
+import android.text.InputFilter
+import android.text.InputType
 import androidx.preference.EditTextPreference
 import androidx.preference.ListPreference
 import androidx.preference.PreferenceFragmentCompat
@@ -45,6 +47,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
         asckPWPreference.setOnPreferenceChangeListener { _, newValue ->
             DataManager.asckPW = newValue.toString()
             true
+        }
+
+        asckPWPreference.setOnBindEditTextListener {
+            it.inputType = InputType.TYPE_CLASS_NUMBER
+            val fArray = arrayOfNulls<InputFilter>(1)
+            fArray[0] = InputFilter.LengthFilter(4)
+            it.filters = fArray
         }
     }
 
