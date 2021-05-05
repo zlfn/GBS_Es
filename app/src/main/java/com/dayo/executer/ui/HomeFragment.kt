@@ -67,38 +67,8 @@ class HomeFragment : Fragment() {
             Toast.makeText(activity, "업데이트가 필요합니다.", Toast.LENGTH_LONG).show()
         }
 
-        try {
-            val strAppPackage = "com.dayo.asck"
-            val pkg = (activity as MainActivity).packageManager.getPackageInfo(strAppPackage, PackageManager.GET_ACTIVITIES)
-
-            while (m.vifo == "") {
-                Thread.sleep(1)
-            }
-            if (pkg.versionName!! != m.vifo.split(' ')[1].replace("b", "beta ")) {
-                asckBtn?.text = "자가진단 하러가기(플러그인 업데이트 필요)"
-            }
-            asckBtn?.setOnClickListener {
-                /*
-                val cn = ComponentName("com.dayo.asck", "com.dayo.asck.MainActivity")
-                val intent = Intent(Intent.ACTION_MAIN)
-                intent.addCategory(Intent.CATEGORY_LAUNCHER)
-                intent.component = cn
-                if(DataManager.asckPW!="") {
-                    intent.putExtra("pw", DataManager.asckPW)
-                    if(DataManager.asckUseAdvOpt){
-                        intent.putExtra("dt", DataManager.asckDt)
-                        intent.putExtra("dsel", DataManager.asckDsel)
-                        intent.putExtra("ds", DataManager.asckDs)
-                    }
-                }
-                startActivity(intent)
-
-                 */
-                startActivity(Intent(m, AsckActivity::class.java))
-            }
-        } catch (e: PackageManager.NameNotFoundException) {
-            asckBtn?.text = "플러그인 설치가 필요합니다."
-            asckBtn?.isEnabled = false
+        asckBtn?.setOnClickListener {
+            startActivity(Intent(m, AsckActivity::class.java))
         }
 
         for(i in DataManager.timeTableData)
