@@ -52,10 +52,10 @@ class DataManager {
                 Thread.sleep(1)
             }
             for(i in TimeTableData.stringToTimeTableData(tableData))
-                DataManager.timeTableData.add(i)
-            var ablrData = "18 50 19 40 학습실 19 50 20 40 학습실 20 50 21 30 학습실 21 40 23 59 동아리_활동" // => Format
+                timeTableData.add(i)
+            var ablrData = "18 50 19 40 myunhak 19 50 20 40 myunhak 20 50 21 30 note1 21 40 23 59 s15" // => Format
             for(i in AblrData.stringToAblrData(ablrData))
-                DataManager.todayAblrTableData.add(i)
+                todayAblrTableData.add(i)
 
             ablrID = sharedPref.getString("ablrID", "")!!
             ablrPW = sharedPref.getString("ablrPW", "")!!

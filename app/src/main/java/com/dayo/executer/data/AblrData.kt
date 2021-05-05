@@ -1,5 +1,8 @@
 package com.dayo.executer.data
 
+import android.content.ComponentName
+import android.content.Intent
+
 data class AblrData(val sth: String, val stm: String, val eth: String, val etm: String, val locationInfo: String) {
     fun getFullTime(): String = "$sth:$stm ~ $eth:$etm"
 
@@ -17,6 +20,21 @@ data class AblrData(val sth: String, val stm: String, val eth: String, val etm: 
             }
             return rtn
         }
+    }
+
+    fun toIntent(): Intent {
+        val cn = ComponentName("com.dayo.ablr", "com.dayo.ablr.AddNewActivity")
+        val intent = Intent(Intent.ACTION_MAIN)
+        intent.addCategory(Intent.CATEGORY_LAUNCHER)
+        intent.component = cn
+        intent.putExtra("plc", locationInfo)
+        intent.putExtra("sth", sth)
+        intent.putExtra("stm", stm)
+        intent.putExtra("eth", eth)
+        intent.putExtra("etm", etm)
+        intent.putExtra("id", DataManager.ablrID)
+        intent.putExtra("pw", DataManager.ablrPW)
+        return intent
     }
 }
 

@@ -49,6 +49,7 @@ class HomeFragment : Fragment() {
         val timeTable = view?.findViewById<TableLayout>(R.id.timeTable)
         val ablrTable = view?.findViewById<TableLayout>(R.id.ablrTable)
         val asckBtn = view?.findViewById<Button>(R.id.sckBtn)
+        val applyAblrBtn = view?.findViewById<Button>(R.id.applyAblrBtn)
 
         timeTable?.removeAllViews()
         ablrTable?.removeAllViews()
@@ -76,6 +77,12 @@ class HomeFragment : Fragment() {
 
         for(i in DataManager.todayAblrTableData)
             ablrTable?.addView(AblrTableRow(m, i))
+
+        applyAblrBtn?.setOnClickListener {
+            for(i in DataManager.todayAblrTableData){
+                startActivity(i.toIntent())
+            }
+        }
     }
 
     override fun onStart() {
