@@ -101,13 +101,6 @@ class HomeFragment : Fragment() {
             super.addView(subjectInfo)
         }
 
-        fun getRow(): AblrTableRow {
-            addView()
-            return this
-        }
-
-        fun getData(): AblrData = ablrData
-
         init {
             timeInfo.text = ablrData.getFullTime()
             subjectInfo.text = ablrData.locationInfo
@@ -130,13 +123,6 @@ class HomeFragment : Fragment() {
             super.addView(roomInfo)
             super.addView(elseInfo)
         }
-
-        fun getRow(): TimeTableRow {
-            addView()
-            return this
-        }
-
-        fun getData(): TimeTableData = timeTableData
 
         init {
             timeInfo.text = timeTableData.timeInfo
