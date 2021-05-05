@@ -72,9 +72,11 @@ class HomeFragment : Fragment() {
             startActivity(Intent(m, AsckActivity::class.java))
         }
 
+        timeTable?.removeAllViews()
         for(i in DataManager.timeTableData)
             timeTable?.addView(TimeTableRow(m, i))
 
+        ablrTable?.removeAllViews()
         for(i in DataManager.todayAblrTableData)
             ablrTable?.addView(AblrTableRow(m, i))
 
