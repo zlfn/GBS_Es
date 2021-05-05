@@ -17,12 +17,14 @@ class DataManager {
         var ablrID = ""
         var ablrPW = ""
         var asckPW = ""
+        var classInfo = ""
 
         fun saveSettings() {
             sharedPref.edit {
                 putString("ablrID", ablrID)
                 putString("ablrPW", ablrPW)
                 putString("asckPW", asckPW)
+                putString("classInfo", classInfo)
                 apply()
             }
         }
@@ -46,6 +48,7 @@ class DataManager {
             ablrID = sharedPref.getString("ablrID", "")!!
             ablrPW = sharedPref.getString("ablrPW", "")!!
             asckPW = sharedPref.getString("asckPW", "")!!
+            classInfo = sharedPref.getString("classInfo", "1-1")!!
         }
     }
 }
