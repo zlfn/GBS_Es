@@ -24,6 +24,8 @@ class DataManager {
         var asckDs = 0L
         var asckUseAdvOpt = false
 
+        var lowProtect = false
+
         fun saveSettings() {
             sharedPref.edit {
                 putString("ablrID", ablrID)
@@ -34,6 +36,7 @@ class DataManager {
                 putLong("asckDsel", asckDsel)
                 putLong("asckDs", asckDs)
                 putBoolean("asckUseAdvOpt", asckUseAdvOpt)
+                putBoolean("lowProtect", lowProtect)
                 apply()
             }
         }
@@ -62,6 +65,7 @@ class DataManager {
             asckDsel = sharedPref.getLong("asckDsel", 1500L)
             asckDs = sharedPref.getLong("asckDs", 1000L)
             asckUseAdvOpt = sharedPref.getBoolean("asckUseAdvOpt", false)
+            lowProtect = sharedPref.getBoolean("lowProtect", false)
         }
     }
 }

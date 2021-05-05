@@ -16,6 +16,7 @@ import androidx.core.view.get
 import androidx.core.view.iterator
 import androidx.core.view.size
 import com.dayo.executer.App
+import com.dayo.executer.AsckActivity
 import com.dayo.executer.MainActivity
 import com.dayo.executer.R
 import com.dayo.executer.data.AblrData
@@ -77,6 +78,7 @@ class HomeFragment : Fragment() {
                 asckBtn?.text = "자가진단 하러가기(플러그인 업데이트 필요)"
             }
             asckBtn?.setOnClickListener {
+                /*
                 val cn = ComponentName("com.dayo.asck", "com.dayo.asck.MainActivity")
                 val intent = Intent(Intent.ACTION_MAIN)
                 intent.addCategory(Intent.CATEGORY_LAUNCHER)
@@ -90,6 +92,9 @@ class HomeFragment : Fragment() {
                     }
                 }
                 startActivity(intent)
+
+                 */
+                startActivity(Intent(m, AsckActivity::class.java))
             }
         } catch (e: PackageManager.NameNotFoundException) {
             asckBtn?.text = "플러그인 설치가 필요합니다."
