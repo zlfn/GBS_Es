@@ -32,7 +32,7 @@ class DataManager {
         fun loadSettings() {
             var tableData = ""
             CoroutineScope(Dispatchers.Default).launch {
-                //val doc = Jsoup.connect("http://34.70.245.122/timetable/101/${SimpleDateFormat("yyyy-MM-dd").format(Date())}.html").get()
+                //val doc = Jsoup.connect("http://34.70.245.122/timetable/${classInfo.replace('-', '0')}/${SimpleDateFormat("yyyy-MM-dd").format(Date())}.html").get()
                 val doc = Jsoup.connect("http://34.70.245.122/timetable/101/2021-05-04.html").get()
                 tableData = doc.body().text()
             }

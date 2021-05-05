@@ -16,12 +16,16 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val ablrIDPreference = findPreference<EditTextPreference>("ablrID")!!
         val ablrPWPreference = findPreference<EditTextPreference>("ablrPW")!!
 
+        val asckPWPreference = findPreference<EditTextPreference>("asckPW")!!
+
         classPreferences.setEntries(R.array.class_list)
         classPreferences.setEntryValues(R.array.class_list)
         classPreferences.value = DataManager.classInfo
 
         ablrIDPreference.text = DataManager.ablrID
         ablrPWPreference.text = DataManager.ablrPW
+
+        asckPWPreference.text = DataManager.asckPW
 
         classPreferences.setOnPreferenceChangeListener { _, newValue ->
             DataManager.classInfo = newValue.toString()
@@ -32,9 +36,14 @@ class SettingsFragment : PreferenceFragmentCompat() {
             DataManager.ablrID = newValue.toString()
             true
         }
-        
+
         ablrPWPreference.setOnPreferenceChangeListener { _, newValue ->
             DataManager.ablrPW = newValue.toString()
+            true
+        }
+
+        asckPWPreference.setOnPreferenceChangeListener { _, newValue ->
+            DataManager.asckPW = newValue.toString()
             true
         }
     }
