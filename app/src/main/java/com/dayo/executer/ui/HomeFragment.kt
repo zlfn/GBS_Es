@@ -13,9 +13,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.view.get
+import androidx.core.view.iterator
+import androidx.core.view.size
+import com.dayo.executer.App
 import com.dayo.executer.MainActivity
 import com.dayo.executer.R
 import com.dayo.executer.data.AblrData
+import com.dayo.executer.data.DataManager
 import com.dayo.executer.data.TimeTableData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -29,8 +33,15 @@ class HomeFragment : Fragment() {
     lateinit var m: MainActivity
     lateinit var nav: View
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
@@ -38,6 +49,14 @@ class HomeFragment : Fragment() {
     private fun initUI() {
         m = (activity as MainActivity)
         nav = m.findViewById(R.id.nav_view)
+
+        val sv = view?.findViewById<ScrollView>(R.id.scv)
+        val timeTable = view?.findViewById<TableLayout>(R.id.timeTable)
+        val ablrTable = view?.findViewById<TableLayout>(R.id.ablrTable)
+        val asckBtn = view?.findViewById<Button>(R.id.sckBtn)
+
+        timeTable?.removeAllViews()
+        ablrTable?.removeAllViews()
 
         view?.findViewById<Button>(R.id.testBtn)?.setOnClickListener {
             val cn = ComponentName("com.dayo.ablr", "com.dayo.ablr.AddNewActivity")
@@ -52,9 +71,9 @@ class HomeFragment : Fragment() {
             intent.putExtra("id", "testID")
             intent.putExtra("pw", "testPW") //TODO: Replace it to your ID and Password
             startActivity(intent)
-        } //This code is test for connection of ABLR and HomeFragment
 
-        val sv = view?.findViewById<ScrollView>(R.id.scv)
+        }   //This code is test for connection of ABLR and HomeFragment
+
         sv?.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
             if (oldScrollY - 10 > scrollY)
                 nav.visibility = View.INVISIBLE
@@ -65,11 +84,10 @@ class HomeFragment : Fragment() {
         while (m.vifo == "") {
             Thread.sleep(1)
         }
-        if ((activity as MainActivity).packageManager.getPackageInfo("com.dayo.executer", PackageManager.GET_ACTIVITIES).versionName != m.vifo.split(' ')[2]) {
+        if (m.packageManager.getPackageInfo("com.dayo.executer", PackageManager.GET_ACTIVITIES).versionName != m.vifo.split(' ')[2]) {
             Toast.makeText(activity, "업데이트가 필요합니다.", Toast.LENGTH_LONG).show()
         }
 
-        val asckBtn = view?.findViewById<Button>(R.id.sckBtn)
         try {
             val strAppPackage = "com.dayo.asck"
             val pkg = (activity as MainActivity).packageManager.getPackageInfo(strAppPackage, PackageManager.GET_ACTIVITIES);
@@ -92,26 +110,11 @@ class HomeFragment : Fragment() {
             asckBtn?.isEnabled = false
         }
 
-        //var tableData = "9:10~10:00 영어 서원화 어학실2 암것도_없음 10:10~11:00 국어 전은선 304 수행_없음" => Format
-        var tableData = ""
-        CoroutineScope(Dispatchers.Default).launch {
-            //val doc = Jsoup.connect("http://34.70.245.122/timetable/101/${SimpleDateFormat("yyyy-MM-dd").format(Date())}.html").get()
-            val doc = Jsoup.connect("http://34.70.245.122/timetable/101/2021-05-04.html").get()
-            tableData = doc.body().text()
-        }
-        while (tableData == "") {
-            Thread.sleep(1)
-        }
-        val timeTable = view?.findViewById<TableLayout>(R.id.timeTable)
-        timeTable?.removeAllViews()
-        for(i in TimeTableData.stringToTimeTableData(tableData))
-            timeTable?.addView(TimeTableRow(activity?.applicationContext!!, i).getRow())
+        for(i in DataManager.timeTableData)
+            timeTable?.addView(TimeTableRow(m, i))
 
-        var ablrData = "18 50 19 40 학습실 19 50 20 40 학습실 20 50 21 30 학습실 21 40 23 59 동아리_활동" // => Format
-        val ablrTable = view?.findViewById<TableLayout>(R.id.ablrTable)
-        ablrTable?.removeAllViews()
-        for(i in AblrData.stringToAblrData(ablrData))
-            ablrTable?.addView(AblrTableRow(activity?.applicationContext!!, i).getRow())
+        for(i in DataManager.todayAblrTableData)
+            ablrTable?.addView(AblrTableRow(m, i))
     }
 
     override fun onStart() {
@@ -125,6 +128,7 @@ class HomeFragment : Fragment() {
         var subjectInfo: TextView = TextView(context)
 
         private fun addView() {
+            super.removeAllViews()
             super.addView(timeInfo)
             super.addView(subjectInfo)
         }
@@ -139,6 +143,7 @@ class HomeFragment : Fragment() {
         init {
             timeInfo.text = ablrData.getFullTime()
             subjectInfo.text = ablrData.locationInfo
+            addView()
         }
     }
 
@@ -150,6 +155,7 @@ class HomeFragment : Fragment() {
         var roomInfo: TextView = TextView(context)
 
         private fun addView() {
+            super.removeAllViews()
             super.addView(timeInfo)
             super.addView(subjectInfo)
             super.addView(tInfo)
@@ -170,6 +176,7 @@ class HomeFragment : Fragment() {
             tInfo.text = timeTableData.teacherInfo
             elseInfo.text = timeTableData.elseInfo
             roomInfo.text = timeTableData.roomInfo
+            addView()
         }
     }
 }

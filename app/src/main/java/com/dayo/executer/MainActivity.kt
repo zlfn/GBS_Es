@@ -37,8 +37,7 @@ class MainActivity : AppCompatActivity() {
 
         CoroutineScope(Dispatchers.Default).launch {
             val doc = Jsoup.connect("http://34.70.245.122/version.html").get()
-            vifo = doc.body().text()
-            Log.d("asdf", vifo) //ablr asck ex
+            vifo = doc.body().text() //ablr asck ex
         }
 
         Toast.makeText(this, "버전 정보를 불러오고 있습니다.", Toast.LENGTH_SHORT).show()
