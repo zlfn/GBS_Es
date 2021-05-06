@@ -6,4 +6,10 @@
     tools:context=".ui.LostThingInfoFragment">
 
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="개발중 입니다."
+        android:textSize="34sp" />
 </FrameLayout>
