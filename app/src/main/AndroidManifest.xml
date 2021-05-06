@@ -6,7 +6,6 @@
 
     <queries>
         <package android:name="com.dayo.ablr" />
-        <package android:name="com.dayo.asck" />
     </queries>
 
     <application
@@ -16,11 +15,13 @@
         android:label="GBS Essential"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Executer"
+        android:theme="@style/Theme.AppCompat"
         android:usesCleartextTraffic="true">
-        <activity android:name=".AsckActivity"></activity>
+        <activity android:name=".AsckActivity" />
         <activity
             android:name=".MainActivity"
+            android:launchMode="singleInstance"
+            android:theme="@style/Theme.AppCompat"
             android:label="@string/title_activity_main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
