@@ -20,6 +20,8 @@
  - Crawl meal data in https://gbs.hs.kr
  - Create setting fragment(fragment exist but that has no action)
  - 과제 리스트 및 다운로드 기능
+ - School map view feature
+ - Simple in-school navigaion feature which able to find some objects
 
 ### Deprecated
 
@@ -39,3 +41,4 @@
 ## Developer
  - Edit this part your self via PR
  - Dayo
+ - zlfn
