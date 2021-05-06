@@ -16,9 +16,10 @@
  - UI/UX
  - 분실물 찾기 feature
  - 학습실 신청 자동화 프로그램과의 통합
- - 자가진단, 학습실 신청, 수행평가 관련 알림 푸시(w. GCP, FCM)
+ - 자가진단, 학습실 신청, 과제 관련 알림 푸시(w. GCP, FCM)
  - Crawl meal data in https://gbs.hs.kr
  - Create setting fragment(fragment exist but that has no action)
+ - 과제 리스트 및 다운로드 기능
 
 ### Deprecated
 
