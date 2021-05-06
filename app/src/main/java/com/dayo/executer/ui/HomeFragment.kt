@@ -1,32 +1,20 @@
 package com.dayo.executer.ui
 
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.icu.text.SimpleDateFormat
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.core.view.get
-import androidx.core.view.iterator
-import androidx.core.view.size
-import com.dayo.executer.App
 import com.dayo.executer.AsckActivity
 import com.dayo.executer.MainActivity
 import com.dayo.executer.R
 import com.dayo.executer.data.AblrData
 import com.dayo.executer.data.DataManager
 import com.dayo.executer.data.TimeTableData
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import org.jsoup.Jsoup
-import java.util.*
 
 
 class HomeFragment : Fragment() {
@@ -60,13 +48,13 @@ class HomeFragment : Fragment() {
             else if (oldScrollY + 10 < scrollY)
                 nav.visibility = View.VISIBLE
         }
+
         //Wait for INIT vifo
-        while (m.vifo == "") {
+        while (m.vifo == "")
             Thread.sleep(1)
-        }
-        if (m.packageManager.getPackageInfo("com.dayo.executer", PackageManager.GET_ACTIVITIES).versionName != m.vifo.split(' ')[2]) {
+
+        if (m.packageManager.getPackageInfo("com.dayo.executer", PackageManager.GET_ACTIVITIES).versionName != m.vifo.split(' ')[2])
             Toast.makeText(activity, "업데이트가 필요합니다.", Toast.LENGTH_LONG).show()
-        }
 
         asckBtn?.setOnClickListener {
             startActivity(Intent(m, AsckActivity::class.java))
@@ -81,9 +69,8 @@ class HomeFragment : Fragment() {
             ablrTable?.addView(AblrTableRow(m, i))
 
         applyAblrBtn?.setOnClickListener {
-            for(i in DataManager.todayAblrTableData){
+            for(i in DataManager.todayAblrTableData)
                 startActivity(i.toIntent())
-            }
         }
     }
 
