@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.widget.Button
 import android.util.Log
 import android.view.View
 import android.widget.TextView
@@ -18,10 +19,15 @@ import kotlinx.coroutines.launch
 import org.jsoup.Jsoup
 
 
+
 class lgs_MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.lgs_activity_main)
+        val backButton: Button = findViewById(R.id.button)
+        backButton.setOnClickListener{
+            finish()
+        }
 
         var vifo = ""
         CoroutineScope(Dispatchers.Default).launch {
@@ -108,5 +114,6 @@ class lgs_MainActivity : AppCompatActivity() {
                         .create().show()
             }
         }
+
     }
 }
