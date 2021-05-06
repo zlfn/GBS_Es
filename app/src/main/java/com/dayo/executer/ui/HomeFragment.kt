@@ -3,10 +3,13 @@ package com.dayo.executer.ui
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.*
+import androidx.core.content.ContextCompat.startForegroundService
+import com.dayo.executer.AblrService
 import com.dayo.executer.AsckActivity
 import com.dayo.executer.MainActivity
 import com.dayo.executer.R
@@ -55,7 +58,9 @@ class HomeFragment : Fragment() {
             Toast.makeText(activity, "업데이트가 필요합니다.", Toast.LENGTH_LONG).show()
 
         asckBtn?.setOnClickListener {
-            startActivity(Intent(m, AsckActivity::class.java))
+            //startActivity(Intent(m, AsckActivity::class.java))
+            val intent = Intent(activity, AblrService::class.java)
+            startForegroundService(activity as MainActivity, intent)
         }
 
         timeTable?.removeAllViews()
