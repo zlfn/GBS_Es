@@ -2,40 +2,36 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/back"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:visibility="visible"
     tools:context=".lgs_MainActivity">
 
     <LinearLayout
-        android:id="@+id/autoSelfCheckMove"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:layout_margin="15dp"
         android:background="@drawable/border"
-        android:orientation="vertical">
-
+        android:id="@+id/autoSelfCheckMove" >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="5dp"
             android:text="자가진단 자동화"
             android:textSize="20sp"
-            android:textStyle="bold" />
-
+            android:layout_gravity="start"
+            android:layout_marginTop="10dp"
+            android:textStyle="bold"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="50dp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginLeft="10dp"
             android:gravity="start"
+            android:layout_gravity="start"
             android:text="자가진단을 자동화한 플러그인 입니다."
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:layout_marginLeft="10dp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -53,34 +49,31 @@
             android:text="플러그인을 설치해주세요 :D"
             android:textColor="#8ECF356B" />
     </LinearLayout>
-
     <LinearLayout
-        android:id="@+id/ABLRMove"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:layout_margin="15dp"
         android:background="@drawable/border"
-        android:orientation="vertical">
-
+        android:id="@+id/ABLRMove" >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="5dp"
             android:text="학습실 신청 자동화"
             android:textSize="20sp"
-            android:textStyle="bold" />
-
+            android:layout_gravity="start"
+            android:layout_marginTop="10dp"
+            android:textStyle="bold"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="50dp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginLeft="10dp"
             android:gravity="start"
+            android:layout_gravity="start"
             android:text="학습실 신청을 자동화한 플러그인 입니다."
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:layout_marginLeft="10dp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -98,11 +91,4 @@
             android:text="플러그인을 설치해주세요 :D"
             android:textColor="#8ECF356B" />
     </LinearLayout>
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="뒤로가기"
-        android:textSize="20sp" />
 </LinearLayout>
