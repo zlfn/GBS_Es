@@ -55,11 +55,7 @@ class HomeFragment : Fragment() {
             Toast.makeText(activity, "업데이트가 필요합니다.", Toast.LENGTH_LONG).show()
 
         asckBtn?.setOnClickListener {
-            //startActivity(Intent(m, AsckActivity::class.java))
-
-            val intent = Intent(activity, AblrService::class.java)
-            startForegroundService(activity as MainActivity, intent)
-            //startActivity(Intent(m, DummyActivity::class.java))
+            startActivity(Intent(m, AsckActivity::class.java))
         }
 
         timeTable?.removeAllViews()
@@ -71,8 +67,8 @@ class HomeFragment : Fragment() {
             ablrTable?.addView(AblrTableRow(m, i))
 
         applyAblrBtn?.setOnClickListener {
-            for(i in DataManager.todayAblrTableData)
-                startActivity(i.toIntent())
+            val intent = Intent(activity, AblrService::class.java)
+            startForegroundService(activity as MainActivity, intent)
         }
     }
 
