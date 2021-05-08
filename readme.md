@@ -40,5 +40,9 @@
 
 ## Developer
  - Edit this part your self via PR
- - Dayo
+ - Dayo (Dayo#3334)
  - zlfn
+
+## Discord
+ - [Join Discord Server!!!][DiscordSv]
+ [DiscordSv]: https://discord.gg/AquMeq6bRE "Join us!!!"
