@@ -42,6 +42,8 @@ class DataManager {
         }
 
         fun loadSettings() {
+            todayAblrTableData = mutableListOf()
+            timeTableData = mutableListOf()
             var tableData = ""
             CoroutineScope(Dispatchers.Default).launch {
                 //val doc = Jsoup.connect("http://34.70.245.122/timetable/${classInfo.replace('-', '0')}/${SimpleDateFormat("yyyy-MM-dd").format(Date())}.html").get()
