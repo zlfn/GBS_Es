@@ -9,10 +9,7 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.*
 import androidx.core.content.ContextCompat.startForegroundService
-import com.dayo.executer.AblrService
-import com.dayo.executer.AsckActivity
-import com.dayo.executer.MainActivity
-import com.dayo.executer.R
+import com.dayo.executer.*
 import com.dayo.executer.data.AblrData
 import com.dayo.executer.data.DataManager
 import com.dayo.executer.data.TimeTableData
@@ -59,8 +56,10 @@ class HomeFragment : Fragment() {
 
         asckBtn?.setOnClickListener {
             //startActivity(Intent(m, AsckActivity::class.java))
+
             val intent = Intent(activity, AblrService::class.java)
             startForegroundService(activity as MainActivity, intent)
+            //startActivity(Intent(m, DummyActivity::class.java))
         }
 
         timeTable?.removeAllViews()
