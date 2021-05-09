@@ -41,7 +41,7 @@
 ## Developer
  - Edit this part your self via PR
  - Dayo (Dayo#3334)
- - zlfn
+ - zlfn (Kiroo#3247)
 
 ## Discord
  - [Join Discord Server!!!][DiscordSv]
