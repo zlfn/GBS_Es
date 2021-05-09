@@ -30,6 +30,7 @@ class AblrService : Service() {
         var res = ""
     }
     var deleteResult = 1
+    var rigResult = 1
     var reExec = true
     var isFinished = false
 
@@ -94,15 +95,15 @@ class AblrService : Service() {
                         reExec = false
                         view.loadUrl("javascript:window.jsi.getHtml(document.getElementsByTagName('html')[0].innerHTML);");
                         CoroutineScope(Dispatchers.Default).launch {
-                            while (AblrService.res == "") {
+                            while (res == "") {
                                 Thread.sleep(1)
                             }
-                            var doc = Jsoup.parse(AblrService.res)
+                            var doc = Jsoup.parse(res)
                             var ele = doc.getElementsByTag("tr")
                             while(ele.size < 1) {
                                 CoroutineScope(Dispatchers.Main).launch {
                                     view.loadUrl("javascript:window.jsi.getHtml(document.getElementsByTagName('html')[0].innerHTML);");
-                                    doc = Jsoup.parse(AblrService.res)
+                                    doc = Jsoup.parse(res)
                                     ele = doc.getElementsByTag("tr")
                                 }
                                 Thread.sleep(100)
@@ -110,8 +111,6 @@ class AblrService : Service() {
                             val usqLst = mutableListOf<String>()
                             val rLst = mutableListOf<String>()
                             for(x in ele) {
-                                Log.d("asdf", x.attr("data-user_seq"))
-                                Log.d("asdf", x.attr("data-r_seq"))
                                 usqLst.add(x.attr("data-user_seq"))
                                 rLst.add(x.attr("data-r_seq"))
                             }
@@ -171,7 +170,7 @@ class AblrService : Service() {
                 val mWebView = BackgroundWebView(this@AblrService)
                 mWebView.webViewClient = object : WebViewClient() {}
                 reExec = true
-                elist = mutableListOf<String>()
+                elist = mutableListOf()
                 mWebView.webChromeClient = object : WebChromeClient() {
                     override fun onJsAlert(
                         view: WebView?,
@@ -183,9 +182,14 @@ class AblrService : Service() {
                         return if (message == "정상적으로 처리되었습니다.") {
                             result?.confirm()
                             hit++
+                            rigResult = 1
                             true
                         } else {
-                            super.onJsAlert(view, url, message, result)
+                            rigResult = -1
+                            //super.onJsAlert(view, url, message, result)
+                            result?.confirm()
+                            Toast.makeText(App.appContext, message, Toast.LENGTH_LONG).show()
+                            true
                         }
                     }
 
@@ -200,7 +204,11 @@ class AblrService : Service() {
                             result?.confirm()
                             true
                         } else {
-                            super.onJsConfirm(view, url, message, result)
+                            //super.onJsConfirm(view, url, message, result)
+                            result?.confirm()
+                            rigResult = -2
+                            Toast.makeText(App.appContext, message, Toast.LENGTH_LONG).show()
+                            true
                         }
                     }
 
@@ -226,18 +234,21 @@ class AblrService : Service() {
                                 }
                                 "http://isds.kr/sdm/source/SSH/sh_apply_manage.php" -> {
                                     reExec = false
-                                    for (x in DataManager.todayAblrTableData) {
-                                        CoroutineScope(Dispatchers.Default).launch {
-
-                                        }
-                                        Thread.sleep(100)
-                                        view.loadUrl("javascript:document.getElementById(\"btnDataAdd\").click()");
-                                        CoroutineScope(Dispatchers.Default).launch {
-                                            delay(1500)
+                                    CoroutineScope(Dispatchers.Default).launch {
+                                        for (x in DataManager.todayAblrTableData) {
+                                            Thread.sleep(100)
+                                            while(rigResult==0)Thread.sleep(100)
+                                            rigResult = 0
                                             CoroutineScope(Dispatchers.Main).launch {
-                                                //setProgressDialog("추가하는중...")
-                                                //view.loadUrl("javascript:(function () { document.getElementById(\"popup_out_reason\").value = \"$plc\";document.getElementById(\"popup_out_start_time1\").value = \"$sth\";document.getElementById(\"popup_out_start_time2\").value = \"$stm\";document.getElementById(\"popup_out_end_time1\").value = \"$eth\";document.getElementById(\"popup_out_end_time2\").value = \"$etm\";document.getElementById(\"btnConfirmOut\").click()})()");
-                                                view.loadUrl("javascript:(function () { document.getElementById(\"popup_out_reason\").value = \"${x.locationInfo}\";document.getElementById(\"popup_out_start_time1\").value = \"${x.sth}\";document.getElementById(\"popup_out_start_time2\").value = \"${x.stm}\";document.getElementById(\"popup_out_end_time1\").value = \"${x.eth}\";document.getElementById(\"popup_out_end_time2\").value = \"${x.etm}\";document.getElementById(\"btnConfirmOut\").click()})()");
+                                                view.loadUrl("javascript:document.getElementById(\"btnDataAdd\").click()");
+                                                CoroutineScope(Dispatchers.Default).launch {
+                                                    delay(100)
+                                                    CoroutineScope(Dispatchers.Main).launch {
+                                                        //setProgressDialog("추가하는중...")
+                                                        //view.loadUrl("javascript:(function () { document.getElementById(\"popup_out_reason\").value = \"$plc\";document.getElementById(\"popup_out_start_time1\").value = \"$sth\";document.getElementById(\"popup_out_start_time2\").value = \"$stm\";document.getElementById(\"popup_out_end_time1\").value = \"$eth\";document.getElementById(\"popup_out_end_time2\").value = \"$etm\";document.getElementById(\"btnConfirmOut\").click()})()");
+                                                        view.loadUrl("javascript:(function () { document.getElementById(\"popup_out_reason\").value = \"${x.locationInfo}\";document.getElementById(\"popup_out_start_time1\").value = \"${x.sth}\";document.getElementById(\"popup_out_start_time2\").value = \"${x.stm}\";document.getElementById(\"popup_out_end_time1\").value = \"${x.eth}\";document.getElementById(\"popup_out_end_time2\").value = \"${x.etm}\";document.getElementById(\"btnConfirmOut\").click()})()");
+                                                    }
+                                                }
                                             }
                                         }
                                     }
