@@ -25,4 +25,8 @@
         android:name="com.dayo.executer.ui.SettingsFragment"
         android:label="설정" />
 
+    <fragment
+        android:id="@+id/navigation_map"
+        android:name="com.dayo.executer.ui.MapFragment"
+        android:label="지도" />
 </navigation>
