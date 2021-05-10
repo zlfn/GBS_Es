@@ -25,9 +25,4 @@
         android:name="com.dayo.executer.ui.SettingsFragment"
         android:label="설정" />
 
-    <activity
-        android:id="@+id/navigation_legacy"
-        android:name="com.dayo.executer.lgs_MainActivity"
-        android:label="구런쳐"
-        tools:layout="@layout/lgs_activity_main" />
 </navigation>
