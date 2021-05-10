@@ -69,6 +69,7 @@ class HomeFragment : Fragment() {
         applyAblrBtn?.setOnClickListener {
             val intent = Intent(activity, AblrService::class.java)
             startForegroundService(activity as MainActivity, intent)
+            //startActivity(Intent(activity, DummyActivity::class.java))
         }
     }
 
@@ -78,7 +79,7 @@ class HomeFragment : Fragment() {
         initUI()
     }
 
-    class AblrTableRow(context: Context, private val ablrData: AblrData): TableRow(context) {
+    class AblrTableRow(context: Context, ablrData: AblrData): TableRow(context) {
         var timeInfo: TextView = TextView(context)
         var subjectInfo: TextView = TextView(context)
 
@@ -95,7 +96,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-    class TimeTableRow(context: Context, private val timeTableData: TimeTableData): TableRow(context) {
+    class TimeTableRow(context: Context, timeTableData: TimeTableData): TableRow(context) {
         var timeInfo: TextView = TextView(context)
         var subjectInfo: TextView = TextView(context)
         var tInfo: TextView = TextView(context)
