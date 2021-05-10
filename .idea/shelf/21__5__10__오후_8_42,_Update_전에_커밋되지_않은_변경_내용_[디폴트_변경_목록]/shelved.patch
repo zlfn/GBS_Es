@@ -1,0 +1,46 @@
+Index: app/src/main/java/com/dayo/executer/MainActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.dayo.executer\n\nimport android.os.Bundle\nimport android.util.Log\nimport android.widget.ScrollView\nimport android.widget.Toast\nimport com.google.android.material.bottomnavigation.BottomNavigationView\nimport androidx.appcompat.app.AppCompatActivity\nimport androidx.navigation.findNavController\nimport androidx.navigation.ui.AppBarConfiguration\nimport androidx.navigation.ui.setupActionBarWithNavController\nimport androidx.navigation.ui.setupWithNavController\nimport com.dayo.executer.data.DataManager\nimport kotlinx.coroutines.CoroutineScope\nimport kotlinx.coroutines.Dispatchers\nimport kotlinx.coroutines.launch\nimport org.jsoup.Jsoup\n\nclass MainActivity : AppCompatActivity() {\n\n    var vifo = \"\"\n    override fun onCreate(savedInstanceState: Bundle?) {\n        super.onCreate(savedInstanceState)\n        setContentView(R.layout.activity_main)\n\n        DataManager.loadSettings()\n\n        val navView: BottomNavigationView = findViewById(R.id.nav_view)\n\n        val navController = findNavController(R.id.nav_host_fragment)\n        // Passing each menu ID as a set of Ids because each\n        // menu should be considered as top level destinations.\n        val appBarConfiguration = AppBarConfiguration(setOf(\n                R.id.navigation_home, R.id.navigation_weekly, R.id.navigation_lost_thing, R.id.navigation_setting, R.id.navigation_map))\n        setupActionBarWithNavController(navController, appBarConfiguration)\n        navView.setupWithNavController(navController)\n\n        CoroutineScope(Dispatchers.Default).launch {\n            val doc = Jsoup.connect(\"http://34.70.245.122/version.html\").get()\n            vifo = doc.body().text() //ablr asck ex\n        }\n\n        Toast.makeText(this, \"버전 정보를 불러오고 있습니다.\", Toast.LENGTH_SHORT).show()\n\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/dayo/executer/MainActivity.kt	(revision c278c35c33c815400bdf8bc4228de2a78e3d4c0f)
++++ app/src/main/java/com/dayo/executer/MainActivity.kt	(date 1620644799650)
+@@ -2,10 +2,12 @@
+ 
+ import android.os.Bundle
+ import android.util.Log
++import android.view.View
+ import android.widget.ScrollView
+ import android.widget.Toast
+ import com.google.android.material.bottomnavigation.BottomNavigationView
+ import androidx.appcompat.app.AppCompatActivity
++import androidx.fragment.app.Fragment
+ import androidx.navigation.findNavController
+ import androidx.navigation.ui.AppBarConfiguration
+ import androidx.navigation.ui.setupActionBarWithNavController
+@@ -35,6 +37,7 @@
+         setupActionBarWithNavController(navController, appBarConfiguration)
+         navView.setupWithNavController(navController)
+ 
++
+         CoroutineScope(Dispatchers.Default).launch {
+             val doc = Jsoup.connect("http://34.70.245.122/version.html").get()
+             vifo = doc.body().text() //ablr asck ex
+Index: .idea/gradle.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"GradleSettings\">\n    <option name=\"linkedExternalProjectsSettings\">\n      <GradleProjectSettings>\n        <option name=\"testRunner\" value=\"PLATFORM\" />\n        <option name=\"distributionType\" value=\"DEFAULT_WRAPPED\" />\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$\" />\n        <option name=\"modules\">\n          <set>\n            <option value=\"$PROJECT_DIR$\" />\n            <option value=\"$PROJECT_DIR$/app\" />\n          </set>\n        </option>\n        <option name=\"resolveModulePerSourceSet\" value=\"false\" />\n      </GradleProjectSettings>\n    </option>\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/gradle.xml	(revision c278c35c33c815400bdf8bc4228de2a78e3d4c0f)
++++ .idea/gradle.xml	(date 1620609807351)
+@@ -1,5 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
++  <component name="GradleMigrationSettings" migrationVersion="1" />
+   <component name="GradleSettings">
+     <option name="linkedExternalProjectsSettings">
+       <GradleProjectSettings>
