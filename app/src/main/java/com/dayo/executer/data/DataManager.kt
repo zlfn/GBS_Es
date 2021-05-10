@@ -26,6 +26,8 @@ class DataManager {
 
         var lowProtect = false
 
+        var networkConnection = false
+
         fun saveSettings() {
             sharedPref.edit {
                 putString("ablrID", ablrID)
