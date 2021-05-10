@@ -19,67 +19,43 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.jsoup.Jsoup
+import java.net.ConnectException
 
 class MainActivity : AppCompatActivity() {
-
-    private val networkCallBack = object : ConnectivityManager.NetworkCallback() {
-        override fun onAvailable(network: Network) {
-            DataManager.networkConnection = true
-        }
-
-        override fun onLost(network: Network) {
-            DataManager.networkConnection = false
-        }
-    }
-
-    private fun registerNetworkCallback() {
-        val connectivityManager = getSystemService(ConnectivityManager::class.java)
-        val networkRequest = NetworkRequest.Builder()
-            .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
-            .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
-            .build()
-        connectivityManager.registerNetworkCallback(networkRequest, networkCallBack)
-    }
-
-    private fun terminateNetworkCallback() {
-        val connectivityManager = getSystemService(ConnectivityManager::class.java)
-        connectivityManager.unregisterNetworkCallback(networkCallBack)
-    }
 
     var vifo = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        registerNetworkCallback()
-        if (!DataManager.networkConnection) {
-            Toast.makeText(this, "Network connection error...", Toast.LENGTH_LONG).show()
-        } else {
-            DataManager.loadSettings()
+        DataManager.loadSettings()
 
-            val navView: BottomNavigationView = findViewById(R.id.nav_view)
+        val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
-            val navController = findNavController(R.id.nav_host_fragment)
-            // Passing each menu ID as a set of Ids because each
-            // menu should be considered as top level destinations.
-            val appBarConfiguration = AppBarConfiguration(
-                setOf(
-                    R.id.navigation_home,
-                    R.id.navigation_weekly,
-                    R.id.navigation_lost_thing,
-                    R.id.navigation_setting
-                )
+        val navController = findNavController(R.id.nav_host_fragment)
+        // Passing each menu ID as a set of Ids because each
+        // menu should be considered as top level destinations.
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.navigation_home,
+                R.id.navigation_weekly,
+                R.id.navigation_lost_thing,
+                R.id.navigation_setting
             )
-            setupActionBarWithNavController(navController, appBarConfiguration)
-            navView.setupWithNavController(navController)
+        )
+        setupActionBarWithNavController(navController, appBarConfiguration)
+        navView.setupWithNavController(navController)
 
+        try {
             CoroutineScope(Dispatchers.Default).launch {
                 val doc = Jsoup.connect("http://34.70.245.122/version.html").get()
                 vifo = doc.body().text() //ablr asck ex
             }
-
-            Toast.makeText(this, "버전 정보를 불러오고 있습니다.", Toast.LENGTH_SHORT).show()
-
         }
+        catch(e: ConnectException){
+            Toast.makeText(this, "Failed to collect version info", Toast.LENGTH_LONG).show()
+        }
+
+        Toast.makeText(this, "버전 정보를 불러오고 있습니다.", Toast.LENGTH_SHORT).show()
     }
 }
