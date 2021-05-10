@@ -55,7 +55,7 @@ class DataManager {
             }
             for(i in TimeTableData.stringToTimeTableData(tableData))
                 timeTableData.add(i)
-            var ablrData = "18 50 19 40 myunhak 19 50 20 40 myunhak 20 50 21 30 note1 21 40 23 59 s15" // => Format
+            var ablrData = "18 50 19 40 note1 19 50 20 40 note1 20 50 21 30 note1 21 40 23 59 s15" // => Format
             for(i in AblrData.stringToAblrData(ablrData))
                 todayAblrTableData.add(i)
 
