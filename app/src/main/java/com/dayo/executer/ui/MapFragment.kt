@@ -4,6 +4,7 @@ import android.content.ClipData
 import android.os.Bundle
 import android.graphics.drawable.Icon
 import android.telephony.ims.ImsMmTelManager
+import android.util.Log
 import android.view.*
 import android.widget.Toolbar
 import androidx.core.view.isVisible
@@ -25,24 +26,13 @@ class MapFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_map, container, false)
     }
 
-    override fun onStart() {
-        super.onStart()
-        m = (activity as MainActivity)
-        var navView: BottomNavigationView = m.findViewById(R.id.nav_view)
-        var menunav: Menu = navView.getMenu()
-        var mapitem: MenuItem = menunav.findItem(R.id.navigation_map)
+    override fun onResume() {
+        super.onResume()
 
-        mapitem.setIcon(R.drawable.ic_baseline_search_24)
         //TODO: AndroidSlidingUpPanel을 이용해서 검색버튼 누르면 검색창 띄우기
     }
 
-    override fun onStop() {
-        super.onStop()
-        m = (activity as MainActivity)
-        var navView: BottomNavigationView = m.findViewById(R.id.nav_view)
-        var menunav: Menu = navView.getMenu()
-        var mapitem: MenuItem = menunav.findItem(R.id.navigation_map)
-
-        mapitem.setIcon(R.drawable.ic_baseline_map_24)
+    override fun onPause() {
+        super.onPause()
     }
 }
