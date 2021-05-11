@@ -6,10 +6,7 @@ import android.text.InputFilter
 import android.text.InputType
 import android.view.View
 import android.widget.EditText
-import androidx.preference.EditTextPreference
-import androidx.preference.ListPreference
-import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.SwitchPreference
+import androidx.preference.*
 import com.dayo.executer.R
 import com.dayo.executer.data.DataManager
 
@@ -32,6 +29,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val asckDtPreference = findPreference<EditTextPreference>("dt")!!
         val asckDselPreference = findPreference<EditTextPreference>("dsel")!!
         val asckDsPreference = findPreference<EditTextPreference>("ds")!!
+
+        val reloadDataPreference = findPreference<Preference>("reloadData")!!
 
         classPreferences.setEntries(R.array.class_list)
         classPreferences.setEntryValues(R.array.class_list)
@@ -112,6 +111,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
             val fArray = arrayOfNulls<InputFilter>(1)
             fArray[0] = InputFilter.LengthFilter(4)
             it.filters = fArray
+        }
+
+        reloadDataPreference.setOnPreferenceClickListener {
+            DataManager.loadSettings()
+            true
         }
     }
 

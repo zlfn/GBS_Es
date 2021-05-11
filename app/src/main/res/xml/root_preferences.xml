@@ -49,4 +49,17 @@
             app:key="ds" />
 
     </PreferenceCategory>
+
+    <PreferenceCategory android:title="일반">
+        <Preference
+            app:title="데이터 다시 로드"
+            app:key="reloadData"
+            app:summary="앱의 데이터를 다시 로드합니다." />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Dev">
+        <Preference
+            app:title="Dayo" />
+        <Preference />
+    </PreferenceCategory>
 </PreferenceScreen>

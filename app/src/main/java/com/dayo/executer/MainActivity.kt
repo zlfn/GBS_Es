@@ -2,6 +2,10 @@ package com.dayo.executer
 
 import android.R.anim
 import android.R.id
+import android.net.ConnectivityManager
+import android.net.Network
+import android.net.NetworkCapabilities
+import android.net.NetworkRequest
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -9,6 +13,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -19,6 +24,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.jsoup.Jsoup
+import java.net.ConnectException
 
 
 class MainActivity : AppCompatActivity() {
@@ -41,15 +47,29 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        val appBarConfiguration = AppBarConfiguration(setOf(
-                R.id.navigation_home, R.id.navigation_weekly, R.id.navigation_lost_thing, R.id.navigation_setting, R.id.navigation_map))
+
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.navigation_home,
+                R.id.navigation_weekly,
+                R.id.navigation_lost_thing,
+                R.id.navigation_setting,
+                R.id.navigation_map
+            )
+        )
+      
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setOnNavigationItemSelectedListener (mnavviewitemselectedListener)
         //navView.setupWithNavController(navController)
 
-        CoroutineScope(Dispatchers.Default).launch {
-            val doc = Jsoup.connect("http://34.70.245.122/version.html").get()
-            vifo = doc.body().text() //ablr asck ex
+        try {
+            CoroutineScope(Dispatchers.Default).launch {
+                val doc = Jsoup.connect("http://34.70.245.122/version.html").get()
+                vifo = doc.body().text() //ablr asck ex
+            }
+        }
+        catch(e: ConnectException){
+            Toast.makeText(this, "Failed to collect version info", Toast.LENGTH_LONG).show()
         }
 
         Toast.makeText(this, "버전 정보를 불러오고 있습니다.", Toast.LENGTH_SHORT).show()

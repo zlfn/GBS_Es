@@ -69,7 +69,8 @@ class HomeFragment : Fragment() {
         applyAblrBtn?.setOnClickListener {
             val intent = Intent(activity, AblrService::class.java)
             startForegroundService(activity as MainActivity, intent)
-            //startActivity(Intent(activity, DummyActivity::class.java))
+            //startActivity(Intent(activity, EditAblrActivity::class.java).putExtra("edt", 1))
+            //startActivity(Intent(activity, EditAblrActivity::class.java))
         }
     }
 
@@ -91,7 +92,7 @@ class HomeFragment : Fragment() {
 
         init {
             timeInfo.text = ablrData.getFullTime()
-            subjectInfo.text = ablrData.locationInfo
+            subjectInfo.text = resources.getStringArray(R.array.place_list)[resources.getStringArray(R.array.place_data_list).indexOf(ablrData.locationInfo)]
             addView()
         }
     }
