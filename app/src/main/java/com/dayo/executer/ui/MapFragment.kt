@@ -44,4 +44,10 @@ class MapFragment : Fragment() {
         var drawer: SlidingUpPanelLayout = m.findViewById(R.id.main_panel)
         drawer.setPanelState(SlidingUpPanelLayout.PanelState.ANCHORED)
     }
+
+    fun closePanel() {
+        m = (activity as MainActivity)
+        var drawer: SlidingUpPanelLayout = m.findViewById(R.id.main_panel)
+        drawer.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED)
+    }
 }

@@ -1,28 +1,25 @@
 package com.dayo.executer
 
+import android.R.anim
+import android.R.id
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.ScrollView
 import android.widget.Toast
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentContainerView
-import androidx.navigation.NavController
+import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
 import com.dayo.executer.data.DataManager
 import com.dayo.executer.ui.*
-import com.google.android.material.navigation.NavigationView
-import com.sothree.slidinguppanel.SlidingUpPanelLayout
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.jsoup.Jsoup
+
 
 class MainActivity : AppCompatActivity() {
     val fragmenthome: Fragment = com.dayo.executer.ui.HomeFragment()
@@ -123,11 +120,10 @@ class MainActivity : AppCompatActivity() {
 
     fun changeFragment(fragment: Fragment) {
         if(fragment!=active) {
-            supportFragmentManager
-                .beginTransaction()
-                .remove(active)
-                .replace(R.id.nav_host_fragment, fragment)
-                .commit()
+            val ft: FragmentTransaction= supportFragmentManager.beginTransaction()
+            ft.replace(R.id.nav_host_fragment, fragment)
+            ft.addToBackStack(null)
+            ft.commit()
             active = fragment
         }
     }
