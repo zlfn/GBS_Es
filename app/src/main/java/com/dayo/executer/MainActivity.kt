@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_home,
                 R.id.navigation_weekly,
                 R.id.navigation_lost_thing,
-                R.id.navigation_setting
+                R.id.navigation_setting,
                 R.id.navigation_map
             )
         )
