@@ -17,6 +17,7 @@ import com.dayo.executer.R
 import com.dayo.executer.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
+import com.sothree.slidinguppanel.SlidingUpPanelLayout
 
 class MapFragment : Fragment() {
     lateinit var m : MainActivity
@@ -28,11 +29,19 @@ class MapFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-
+        openPanel()
+        Log.d("asdf", "OpenedPanel")
         //TODO: AndroidSlidingUpPanel을 이용해서 검색버튼 누르면 검색창 띄우기
     }
 
-    override fun onPause() {
-        super.onPause()
+    override fun onStop() {
+        super.onStop()
+        Log.d("asdf", "ClosedPanel")
+    }
+
+    fun openPanel() {
+        m = (activity as MainActivity)
+        var drawer: SlidingUpPanelLayout = m.findViewById(R.id.main_panel)
+        drawer.setPanelState(SlidingUpPanelLayout.PanelState.ANCHORED)
     }
 }

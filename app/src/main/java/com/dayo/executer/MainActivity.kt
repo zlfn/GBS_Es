@@ -17,18 +17,20 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.dayo.executer.data.DataManager
 import com.dayo.executer.ui.*
+import com.google.android.material.navigation.NavigationView
+import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.jsoup.Jsoup
 
 class MainActivity : AppCompatActivity() {
-
-    val homeFragment by lazy {HomeFragment()}
-    val lostThingFragment by lazy {LostThingInfoFragment()}
-    val mapFragment by lazy {MapFragment()}
-    val settingFragment by lazy {SettingsFragment()}
-    val weeklyFragment by lazy {WeeklyFragment()}
+    val fragmenthome: Fragment = com.dayo.executer.ui.HomeFragment()
+    val fragmentweelky:Fragment = com.dayo.executer.ui.WeeklyFragment()
+    val fragmentlostthing: Fragment = com.dayo.executer.ui.LostThingInfoFragment()
+    val fragmentsetting: Fragment = com.dayo.executer.ui.SettingsFragment()
+    val fragmentmap: Fragment = com.dayo.executer.ui.MapFragment()
+    var active : Fragment = fragmenthome
 
     var vifo = ""
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,8 +47,8 @@ class MainActivity : AppCompatActivity() {
         val appBarConfiguration = AppBarConfiguration(setOf(
                 R.id.navigation_home, R.id.navigation_weekly, R.id.navigation_lost_thing, R.id.navigation_setting, R.id.navigation_map))
         setupActionBarWithNavController(navController, appBarConfiguration)
-        navController.addOnDestinationChangedListener(mOnNavigationItemSelectedListener)
-        navView.setupWithNavController(navController)
+        navView.setOnNavigationItemSelectedListener (mnavviewitemselectedListener)
+        //navView.setupWithNavController(navController)
 
         CoroutineScope(Dispatchers.Default).launch {
             val doc = Jsoup.connect("http://34.70.245.122/version.html").get()
@@ -56,57 +58,77 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this, "버전 정보를 불러오고 있습니다.", Toast.LENGTH_SHORT).show()
     }
 
-    val mOnNavigationItemSelectedListener = NavController.OnDestinationChangedListener { controller,destination,arguments ->
-
-        when (destination.id) {
-            R.id.navigation_map -> {
-                var navView: BottomNavigationView = findViewById(R.id.nav_view)
-                var menunav: Menu = navView.getMenu()
-                var mapitem: MenuItem = menunav.findItem(R.id.navigation_map)
-
-                mapitem.setIcon(R.drawable.ic_baseline_search_24)
-                mapitem.setTitle("검색")
-            }
+    val mnavviewitemselectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item->
+        when(item.itemId) {
             R.id.navigation_home -> {
                 var navView: BottomNavigationView = findViewById(R.id.nav_view)
-                var menunav: Menu = navView.getMenu()
+                var menunav: Menu = navView.menu
                 var mapitem: MenuItem = menunav.findItem(R.id.navigation_map)
 
                 mapitem.setIcon(R.drawable.ic_baseline_map_24)
-                mapitem.setTitle("지도")
-            }
-            R.id.navigation_lost_thing -> {
-                var navView: BottomNavigationView = findViewById(R.id.nav_view)
-                var menunav: Menu = navView.getMenu()
-                var mapitem: MenuItem = menunav.findItem(R.id.navigation_map)
+                mapitem.title = "지도"
 
-                mapitem.setIcon(R.drawable.ic_baseline_map_24)
-                mapitem.setTitle("지도")
-            }
-            R.id.navigation_setting -> {
-                var navView: BottomNavigationView = findViewById(R.id.nav_view)
-                var menunav: Menu = navView.getMenu()
-                var mapitem: MenuItem = menunav.findItem(R.id.navigation_map)
-
-                mapitem.setIcon(R.drawable.ic_baseline_map_24)
-                mapitem.setTitle("지도")
+                changeFragment(fragmenthome)
+                true
             }
             R.id.navigation_weekly -> {
                 var navView: BottomNavigationView = findViewById(R.id.nav_view)
-                var menunav: Menu = navView.getMenu()
+                var menunav: Menu = navView.menu
                 var mapitem: MenuItem = menunav.findItem(R.id.navigation_map)
 
                 mapitem.setIcon(R.drawable.ic_baseline_map_24)
-                mapitem.setTitle("지도")
+                mapitem.title = "지도"
+
+                changeFragment(fragmentweelky)
+                true
+            }
+            R.id.navigation_lost_thing -> {
+                var navView: BottomNavigationView = findViewById(R.id.nav_view)
+                var menunav: Menu = navView.menu
+                var mapitem: MenuItem = menunav.findItem(R.id.navigation_map)
+
+                mapitem.setIcon(R.drawable.ic_baseline_map_24)
+                mapitem.title = "지도"
+
+                changeFragment(fragmentlostthing)
+                true
+            }
+            R.id.navigation_setting -> {
+                var navView: BottomNavigationView = findViewById(R.id.nav_view)
+                var menunav: Menu = navView.menu
+                var mapitem: MenuItem = menunav.findItem(R.id.navigation_map)
+
+                mapitem.setIcon(R.drawable.ic_baseline_map_24)
+                mapitem.title = "지도"
+
+                changeFragment(fragmentsetting)
+                true
+            }
+            R.id.navigation_map -> {
+                var navView: BottomNavigationView = findViewById(R.id.nav_view)
+                var menunav: Menu = navView.menu
+                var mapitem: MenuItem = menunav.findItem(R.id.navigation_map)
+
+                mapitem.setIcon(R.drawable.ic_baseline_search_24)
+                mapitem.title = "검색"
+
+                changeFragment(fragmentmap)
+                true
+            }
+            else -> {
+                false
             }
         }
-        false
     }
 
     fun changeFragment(fragment: Fragment) {
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.nav_host_fragment, fragment)
-            .commit()
+        if(fragment!=active) {
+            supportFragmentManager
+                .beginTransaction()
+                .remove(active)
+                .replace(R.id.nav_host_fragment, fragment)
+                .commit()
+            active = fragment
+        }
     }
 }
