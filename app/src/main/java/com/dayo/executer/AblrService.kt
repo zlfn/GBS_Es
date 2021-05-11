@@ -65,7 +65,7 @@ class AblrService : Service() {
         }
         startForeground(1, builder.build())
 
-        val webView = WebView(this)
+        val webView = BackgroundWebView(this)
         webView.settings.javaScriptEnabled = true
         webView.settings.cacheMode = WebSettings.LOAD_NO_CACHE
         val cookieManager = CookieManager.getInstance()

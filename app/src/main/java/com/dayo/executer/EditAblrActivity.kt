@@ -63,6 +63,7 @@ class EditAblrActivity : AppCompatActivity() {
             if(nEdtDat == -1)
                 DataManager.todayAblrTableData.add(nAblrData)
             else DataManager.todayAblrTableData[nEdtDat] = nAblrData
+            DataManager.saveSettings()
             finish()
         }
     }

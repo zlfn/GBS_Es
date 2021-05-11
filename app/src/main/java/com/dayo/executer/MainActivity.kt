@@ -66,48 +66,49 @@ class MainActivity : AppCompatActivity() {
 
         Toast.makeText(this, "버전 정보를 불러오고 있습니다.", Toast.LENGTH_SHORT).show()
     }
-    val mOnNavigationItemSelectedListener = NavController.OnDestinationChangedListener { controller, destination, arguments ->
+
+    private val mOnNavigationItemSelectedListener = NavController.OnDestinationChangedListener { controller, destination, arguments ->
 
         when (destination.id) {
             R.id.navigation_map -> {
-                var navView: BottomNavigationView = findViewById(R.id.nav_view)
-                var menunav: Menu = navView.getMenu()
-                var mapitem: MenuItem = menunav.findItem(R.id.navigation_map)
+                val navView: BottomNavigationView = findViewById(R.id.nav_view)
+                val menunav: Menu = navView.menu
+                val mapitem: MenuItem = menunav.findItem(R.id.navigation_map)
 
                 mapitem.setIcon(R.drawable.ic_baseline_search_24)
-                mapitem.setTitle("검색")
+                mapitem.title = "검색"
             }
             R.id.navigation_home -> {
-                var navView: BottomNavigationView = findViewById(R.id.nav_view)
-                var menunav: Menu = navView.getMenu()
-                var mapitem: MenuItem = menunav.findItem(R.id.navigation_map)
+                val navView: BottomNavigationView = findViewById(R.id.nav_view)
+                val menunav: Menu = navView.menu
+                val mapitem: MenuItem = menunav.findItem(R.id.navigation_map)
 
                 mapitem.setIcon(R.drawable.ic_baseline_map_24)
-                mapitem.setTitle("지도")
+                mapitem.title = "지도"
             }
             R.id.navigation_lost_thing -> {
-                var navView: BottomNavigationView = findViewById(R.id.nav_view)
-                var menunav: Menu = navView.getMenu()
-                var mapitem: MenuItem = menunav.findItem(R.id.navigation_map)
+                val navView: BottomNavigationView = findViewById(R.id.nav_view)
+                val menunav: Menu = navView.menu
+                val mapitem: MenuItem = menunav.findItem(R.id.navigation_map)
 
                 mapitem.setIcon(R.drawable.ic_baseline_map_24)
-                mapitem.setTitle("지도")
+                mapitem.title = "지도"
             }
             R.id.navigation_setting -> {
-                var navView: BottomNavigationView = findViewById(R.id.nav_view)
-                var menunav: Menu = navView.getMenu()
-                var mapitem: MenuItem = menunav.findItem(R.id.navigation_map)
+                val navView: BottomNavigationView = findViewById(R.id.nav_view)
+                val menunav: Menu = navView.menu
+                val mapitem: MenuItem = menunav.findItem(R.id.navigation_map)
 
                 mapitem.setIcon(R.drawable.ic_baseline_map_24)
-                mapitem.setTitle("지도")
+                mapitem.title = "지도"
             }
             R.id.navigation_weekly -> {
-                var navView: BottomNavigationView = findViewById(R.id.nav_view)
-                var menunav: Menu = navView.getMenu()
-                var mapitem: MenuItem = menunav.findItem(R.id.navigation_map)
+                val navView: BottomNavigationView = findViewById(R.id.nav_view)
+                val menunav: Menu = navView.menu
+                val mapitem: MenuItem = menunav.findItem(R.id.navigation_map)
 
                 mapitem.setIcon(R.drawable.ic_baseline_map_24)
-                mapitem.setTitle("지도")
+                mapitem.title = "지도"
             }
         }
         false

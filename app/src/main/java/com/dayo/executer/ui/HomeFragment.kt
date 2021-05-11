@@ -92,7 +92,7 @@ class HomeFragment : Fragment() {
 
         init {
             timeInfo.text = ablrData.getFullTime()
-            subjectInfo.text = ablrData.locationInfo
+            subjectInfo.text = resources.getStringArray(R.array.place_list)[resources.getStringArray(R.array.place_data_list).indexOf(ablrData.locationInfo)]
             addView()
         }
     }

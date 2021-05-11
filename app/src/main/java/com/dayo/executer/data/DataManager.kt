@@ -1,12 +1,15 @@
 package com.dayo.executer.data
 
 import android.content.Context.MODE_PRIVATE
+import android.util.Log
 import androidx.core.content.edit
 import com.dayo.executer.App
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.jsoup.Jsoup
+import java.text.SimpleDateFormat
+import java.util.*
 
 class DataManager {
     companion object{
@@ -26,8 +29,12 @@ class DataManager {
 
         var lowProtect = false
 
+        var dayOfWeek = -1
+
         fun saveSettings() {
             sharedPref.edit {
+                putString("ablr$dayOfWeek", AblrData.ablrDataToString(todayAblrTableData))
+                Log.d("asdf", "$dayOfWeek ${AblrData.ablrDataToString(todayAblrTableData)}")
                 putString("ablrID", ablrID)
                 putString("ablrPW", ablrPW)
                 putString("asckPW", asckPW)
@@ -55,10 +62,15 @@ class DataManager {
             }
             for(i in TimeTableData.stringToTimeTableData(tableData))
                 timeTableData.add(i)
+            /*
             var ablrData = "18 50 19 40 note1 19 50 20 40 note1 20 50 21 30 note1 21 40 23 59 s15" // => Format
             for(i in AblrData.stringToAblrData(ablrData))
                 todayAblrTableData.add(i)
-
+            */
+            dayOfWeek = Calendar.getInstance().get(Calendar.DAY_OF_WEEK)
+            var ablrData = sharedPref.getString("ablr$dayOfWeek", "")!!
+            for(i in AblrData.stringToAblrData(ablrData))
+                todayAblrTableData.add(i)
             ablrID = sharedPref.getString("ablrID", "")!!
             ablrPW = sharedPref.getString("ablrPW", "")!!
             asckPW = sharedPref.getString("asckPW", "")!!
