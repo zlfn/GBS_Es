@@ -3,7 +3,12 @@ package com.dayo.executer.data
 import android.content.ComponentName
 import android.content.Intent
 
-data class AblrData(val sth: String, val stm: String, val eth: String, val etm: String, val locationInfo: String) {
+data class AblrData(var sth: String, var stm: String, var eth: String, var etm: String, var locationInfo: String) {
+
+    constructor() : this("", "", "", "", "") {
+
+    }
+
     fun getFullTime(): String = "$sth:$stm ~ $eth:$etm"
 
     companion object {

@@ -15,11 +15,12 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="GBS Essential"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat"
-        android:largeHeap="true"
         android:usesCleartextTraffic="true">
+        <activity android:name=".EditAblrActivity"></activity>
         <activity android:name=".DummyActivity" />
 
         <service

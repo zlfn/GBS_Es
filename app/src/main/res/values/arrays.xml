@@ -27,4 +27,66 @@
         <item>3-4</item>
         <item>3-5</item>
     </string-array>
+
+    <string-array name="place_data_list">
+        <item>myunhak</item>
+        <item>note1</item>
+        <item>is1</item>
+        <item>s3342</item>
+        <item>s14</item>
+        <item>s15</item>
+        <item>steam</item>
+        <item>dormitory</item>
+        <item>s5</item>
+        <item>s12</item>
+        <item>s4</item>
+        <item>s3</item>
+        <item>s6</item>
+        <item>s9</item>
+        <item>s7</item>
+        <item>skysky1</item>
+        <item>s2</item>
+        <item>aud</item>
+        <item>s10</item>
+        <item>s11</item>
+        <item>s13</item>
+        <item>s8</item>
+        <item>s1</item>
+        <item>lec1</item>
+        <item>lec2</item>
+        <item>lec3</item>
+        <item>lec4</item>
+        <item>s220</item>
+    </string-array>
+
+    <string-array name="place_list">
+        <item>면학실</item>
+        <item>노트북실</item>
+        <item>4층 검색대</item>
+        <item>5층 검색대</item>
+        <item>방과후 수업</item>
+        <item>동아리 활동</item>
+        <item>레인보우 메이커실</item>
+        <item>조입</item>
+        <item>물리실험실</item>
+        <item>화학실험실</item>
+        <item>생물실험실</item>
+        <item>지학실험실</item>
+        <item>수학 세미나실</item>
+        <item>국어 세미나실</item>
+        <item>외국어 교과실</item>
+        <item>천문대</item>
+        <item>체육관</item>
+        <item>강당</item>
+        <item>컴퓨터 1실</item>
+        <item>컴퓨터 2실</item>
+        <item>음악실</item>
+        <item>어학실</item>
+        <item>시청각실</item>
+        <item>강의동 2층</item>
+        <item>강의동 3층</item>
+        <item>강의동 4층</item>
+        <item>강의동 5층</item>
+        <item>회의실</item>
+    </string-array>
 </resources>

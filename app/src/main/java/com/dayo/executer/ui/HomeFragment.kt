@@ -69,7 +69,8 @@ class HomeFragment : Fragment() {
         applyAblrBtn?.setOnClickListener {
             val intent = Intent(activity, AblrService::class.java)
             startForegroundService(activity as MainActivity, intent)
-            //startActivity(Intent(activity, DummyActivity::class.java))
+            //startActivity(Intent(activity, EditAblrActivity::class.java).putExtra("edt", 1))
+            //startActivity(Intent(activity, EditAblrActivity::class.java))
         }
     }
 
