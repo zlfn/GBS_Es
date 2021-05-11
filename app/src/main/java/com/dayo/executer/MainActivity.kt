@@ -51,6 +51,7 @@ class MainActivity : AppCompatActivity() {
         )
       
         setupActionBarWithNavController(navController, appBarConfiguration)
+        navController.addOnDestinationChangedListener(mOnNavigationItemSelectedListener)
         navView.setupWithNavController(navController)
 
         try {
