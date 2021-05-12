@@ -16,6 +16,7 @@ class EditAblrActivity : AppCompatActivity() {
 
     var nEdtDat = -1
     var nAblrData = AblrData()
+    var info = "main"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +45,7 @@ class EditAblrActivity : AppCompatActivity() {
                 //Nothing
             }
         }
-        if(intent.extras != null && intent.extras!!["edt"] != null) {
+        if(intent.extras != null && intent.extras!!["edt"] != null && intent.extras!!["dataInfo"] != "tmp") {
             nEdtDat = intent.extras!!["edt"] as Int
             nAblrData = DataManager.todayAblrTableData[nEdtDat]
             spinner.setSelection(locDatItem.indexOf(nAblrData.locationInfo))
@@ -53,6 +54,19 @@ class EditAblrActivity : AppCompatActivity() {
             ethEditText.setText(nAblrData.eth)
             etmEditText.setText(nAblrData.etm)
         }
+        else if(intent.extras != null && intent.extras!!["edt"] != null && intent.extras!!["dataInfo"] == "tmp") {
+            nEdtDat = intent.extras!!["edt"] as Int
+            info = "tmp"
+            nAblrData = DataManager.tmpAblrData[nEdtDat]
+            spinner.setSelection(locDatItem.indexOf(nAblrData.locationInfo))
+            sthEditText.setText(nAblrData.sth)
+            stmEditText.setText(nAblrData.stm)
+            ethEditText.setText(nAblrData.eth)
+            etmEditText.setText(nAblrData.etm)
+        }
+        else if(intent.extras != null && intent.extras!!["edt"] == null && intent.extras!!["dataInfo"] == "tmp") {
+            info = "tmp"
+        }
 
         findViewById<FloatingActionButton>(R.id.saveButton).setOnClickListener {
             nAblrData.sth = sthEditText.text.toString()
@@ -60,9 +74,14 @@ class EditAblrActivity : AppCompatActivity() {
             nAblrData.eth = ethEditText.text.toString()
             nAblrData.etm = etmEditText.text.toString()
 
-            if(nEdtDat == -1)
-                DataManager.todayAblrTableData.add(nAblrData)
-            else DataManager.todayAblrTableData[nEdtDat] = nAblrData
+            if(nEdtDat == -1) {
+                if (info == "main")
+                    DataManager.todayAblrTableData.add(nAblrData)
+                else if (info == "tmp")
+                    DataManager.tmpAblrData.add(nAblrData)
+            }
+            else if(info == "main") DataManager.todayAblrTableData[nEdtDat] = nAblrData
+            else DataManager.tmpAblrData[nEdtDat] = nAblrData
             DataManager.saveSettings()
             finish()
         }

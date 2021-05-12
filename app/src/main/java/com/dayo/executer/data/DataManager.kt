@@ -15,6 +15,7 @@ class DataManager {
     companion object{
         var timeTableData = mutableListOf<TimeTableData>()
         var todayAblrTableData = mutableListOf<AblrData>()
+        var tmpAblrData = mutableListOf<AblrData>()
 
         private val sharedPref = App.appContext!!.getSharedPreferences("settings", MODE_PRIVATE)
         var ablrID = ""
@@ -26,6 +27,8 @@ class DataManager {
         var asckDsel = 0L
         var asckDs = 0L
         var asckUseAdvOpt = false
+
+        var noTempDataInHomeFragment = false
 
         var lowProtect = false
 
@@ -44,6 +47,7 @@ class DataManager {
                 putLong("asckDs", asckDs)
                 putBoolean("asckUseAdvOpt", asckUseAdvOpt)
                 putBoolean("lowProtect", lowProtect)
+                putBoolean("noTempDataInHomeFragment", noTempDataInHomeFragment)
                 apply()
             }
         }
@@ -80,6 +84,9 @@ class DataManager {
             asckDs = sharedPref.getLong("asckDs", 1000L)
             asckUseAdvOpt = sharedPref.getBoolean("asckUseAdvOpt", false)
             lowProtect = sharedPref.getBoolean("lowProtect", false)
+            noTempDataInHomeFragment = sharedPref.getBoolean("noTempDataInHomeFragment", false)
+            tmpAblrData = mutableListOf()
+            tmpAblrData.addAll(todayAblrTableData)
         }
     }
 }

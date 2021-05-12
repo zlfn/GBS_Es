@@ -15,6 +15,7 @@ import android.view.View
 import android.webkit.*
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
+import com.dayo.executer.data.AblrData
 import com.dayo.executer.data.DataManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -32,6 +33,7 @@ class AblrService : Service() {
     var rigResult = 1
     var reExec = true
     var isFinished = false
+    var ablrData = listOf<AblrData>()
 
     override fun onBind(intent: Intent): IBinder {
         throw UnsupportedOperationException("Not yet implemented")
@@ -44,6 +46,9 @@ class AblrService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val builder: NotificationCompat.Builder =
                 NotificationCompat.Builder(this, "ablr") //오레오 부터 channelId가 반드시 필요하다.
+
+        ablrData = AblrData.stringToAblrData(intent?.extras!!["ablr"] as String)
+        Log.d("asdf", AblrData.ablrDataToString(ablrData))
 
         //builder.setSmallIcon(R.mipmap.ic_launcher)
         builder.setContentTitle("포그라운드 서비스")
@@ -72,6 +77,7 @@ class AblrService : Service() {
         cookieManager.removeAllCookies { }
         cookieManager.flush()
         webView.addJavascriptInterface(JSI(this), "jsi")
+        webView.settings.domStorageEnabled = true
         webView.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView?, url: String?) {
                 super.onPageFinished(view, url)
@@ -152,12 +158,15 @@ class AblrService : Service() {
                     deleteResult = -2
                     true
                 } else {
-                    super.onJsAlert(view, url, message, result)
+                    Toast.makeText(App.appContext, message, Toast.LENGTH_LONG).show()
+                    result?.confirm()
+                    stopSelf()
+                    true
+                    //super.onJsAlert(view, url, message, result)
                 }
             }
         }
         webView.loadUrl("http://isds.kr")
-
 
         var hit = 0
         CoroutineScope(Dispatchers.Default).launch {
@@ -228,7 +237,7 @@ class AblrService : Service() {
                                 "http://isds.kr/sdm/source/SSH/sh_apply_manage.php" -> {
                                     reExec = false
                                     CoroutineScope(Dispatchers.Default).launch {
-                                        for (x in DataManager.todayAblrTableData) {
+                                        for (x in ablrData) {
                                             Thread.sleep(100)
                                             while (rigResult == 0) Thread.sleep(100)
                                             rigResult = 0

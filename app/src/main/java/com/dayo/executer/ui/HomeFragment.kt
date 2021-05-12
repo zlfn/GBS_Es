@@ -13,6 +13,7 @@ import com.dayo.executer.*
 import com.dayo.executer.data.AblrData
 import com.dayo.executer.data.DataManager
 import com.dayo.executer.data.TimeTableData
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
 class HomeFragment : Fragment() {
@@ -63,14 +64,27 @@ class HomeFragment : Fragment() {
             timeTable?.addView(TimeTableRow(m, i))
 
         ablrTable?.removeAllViews()
-        for(i in DataManager.todayAblrTableData)
+        if(DataManager.noTempDataInHomeFragment)
+            for(i in DataManager.todayAblrTableData)
+                ablrTable?.addView(AblrTableRow(m, i))
+        else for(i in DataManager.tmpAblrData)
             ablrTable?.addView(AblrTableRow(m, i))
 
         applyAblrBtn?.setOnClickListener {
             val intent = Intent(activity, AblrService::class.java)
+            if(DataManager.noTempDataInHomeFragment)
+                intent.putExtra("ablr", AblrData.ablrDataToString(DataManager.todayAblrTableData))
+            else intent.putExtra("ablr", AblrData.ablrDataToString(DataManager.tmpAblrData))
             startForegroundService(activity as MainActivity, intent)
             //startActivity(Intent(activity, EditAblrActivity::class.java).putExtra("edt", 1))
             //startActivity(Intent(activity, EditAblrActivity::class.java))
+        }
+
+        view?.findViewById<FloatingActionButton>(R.id.addAblrDataFab)!!.setOnClickListener {
+            val intent = Intent(activity, EditAblrActivity::class.java)
+            if(!DataManager.noTempDataInHomeFragment)
+                intent.putExtra("dataInfo", "tmp")
+            startActivity(intent)
         }
     }
 
