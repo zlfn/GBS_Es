@@ -1,14 +1,21 @@
 package com.dayo.executer.ui
 
+import android.graphics.Color
 import android.os.Bundle
 import android.text.InputFilter
 import android.text.InputType
+import android.view.View
 import android.widget.EditText
 import androidx.preference.*
 import com.dayo.executer.R
 import com.dayo.executer.data.DataManager
 
 class SettingsFragment : PreferenceFragmentCompat() {
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        view.setBackgroundColor(Color.parseColor("#303030"))
+    }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey)
