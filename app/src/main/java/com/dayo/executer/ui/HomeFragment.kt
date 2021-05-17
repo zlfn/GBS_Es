@@ -34,12 +34,10 @@ class HomeFragment : Fragment() {
 
         val sv = view?.findViewById<ScrollView>(R.id.scv)
         val timeTable = view?.findViewById<TableLayout>(R.id.timeTable)
-        val ablrTable = view?.findViewById<TableLayout>(R.id.ablrTable)
         val asckBtn = view?.findViewById<Button>(R.id.sckBtn)
         val applyAblrBtn = view?.findViewById<Button>(R.id.applyAblrBtn)
 
         timeTable?.removeAllViews()
-        ablrTable?.removeAllViews()
 
         sv?.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
             if (oldScrollY - 10 > scrollY)
@@ -63,13 +61,6 @@ class HomeFragment : Fragment() {
         for(i in DataManager.timeTableData)
             timeTable?.addView(TimeTableRow(m, i))
 
-        ablrTable?.removeAllViews()
-        if(DataManager.noTempDataInHomeFragment)
-            for(i in DataManager.todayAblrTableData)
-                ablrTable?.addView(AblrTableRow(m, i))
-        else for(i in DataManager.tmpAblrData)
-            ablrTable?.addView(AblrTableRow(m, i))
-
         applyAblrBtn?.setOnClickListener {
             val intent = Intent(activity, AblrService::class.java)
             if(DataManager.noTempDataInHomeFragment)
@@ -80,11 +71,43 @@ class HomeFragment : Fragment() {
             //startActivity(Intent(activity, EditAblrActivity::class.java))
         }
 
+        initAblrTable()
+
         view?.findViewById<FloatingActionButton>(R.id.addAblrDataFab)!!.setOnClickListener {
             val intent = Intent(activity, EditAblrActivity::class.java)
             if(!DataManager.noTempDataInHomeFragment)
                 intent.putExtra("dataInfo", "tmp")
             startActivity(intent)
+        }
+    }
+
+    fun initAblrTable() {
+        val ablrTable = view?.findViewById<TableLayout>(R.id.ablrTable)
+        ablrTable?.removeAllViews()
+        if(DataManager.noTempDataInHomeFragment)
+            for(i in DataManager.todayAblrTableData.indices) {
+                val row = AblrTableRow(m, DataManager.todayAblrTableData[i])
+                row.editBtn.setOnClickListener {
+                    startActivity(Intent(activity, EditAblrActivity::class.java).putExtra("edt", i))
+                }
+                row.removeBtn.setOnClickListener {
+                    DataManager.todayAblrTableData.removeAt(i)
+                    DataManager.saveSettings()
+                    initAblrTable()
+                }
+                ablrTable?.addView(row)
+            }
+        else for(i in DataManager.tmpAblrData.indices) {
+            val row = AblrTableRow(m, DataManager.tmpAblrData[i])
+            row.editBtn.setOnClickListener {
+                startActivity(Intent(activity, EditAblrActivity::class.java).putExtra("edt", i).putExtra("dataInfo", "tmp"))
+            }
+            row.removeBtn.setOnClickListener {
+                DataManager.tmpAblrData.removeAt(i)
+                DataManager.saveSettings()
+                initAblrTable()
+            }
+            ablrTable?.addView(row)
         }
     }
 
@@ -97,14 +120,20 @@ class HomeFragment : Fragment() {
     class AblrTableRow(context: Context, ablrData: AblrData): TableRow(context) {
         var timeInfo: TextView = TextView(context)
         var subjectInfo: TextView = TextView(context)
+        public var editBtn: Button = Button(context)
+        public var removeBtn: Button = Button(context)
 
         private fun addView() {
             super.removeAllViews()
             super.addView(timeInfo)
             super.addView(subjectInfo)
+            super.addView(editBtn)
+            super.addView(removeBtn)
         }
 
         init {
+            editBtn.text = "EDIT"
+            removeBtn.text = "REMOVE"
             timeInfo.text = ablrData.getFullTime()
             subjectInfo.text = resources.getStringArray(R.array.place_list)[resources.getStringArray(R.array.place_data_list).indexOf(ablrData.locationInfo)]
             addView()
