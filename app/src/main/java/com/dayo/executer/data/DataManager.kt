@@ -12,7 +12,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class DataManager {
-    companion object{
+    companion object {
+        var weeklyTimeTableData = mutableListOf<MutableList<TimeTableData>>()
         var timeTableData = mutableListOf<TimeTableData>()
         var todayAblrTableData = mutableListOf<AblrData>()
         var tmpAblrData = mutableListOf<AblrData>()
@@ -54,26 +55,10 @@ class DataManager {
 
         fun loadSettings() {
             todayAblrTableData = mutableListOf()
-            timeTableData = mutableListOf()
-            var tableData = ""
-            CoroutineScope(Dispatchers.Default).launch {
-                //val doc = Jsoup.connect("http://34.70.245.122/timetable/${classInfo.replace('-', '0')}/${SimpleDateFormat("yyyy-MM-dd").format(Date())}.html").get()
-                val doc = Jsoup.connect("http://34.70.245.122/timetable/101/2021-05-04.html").get()
-                tableData = doc.body().text()
-            }
-            while (tableData == "") {
-                Thread.sleep(1)
-            }
-            for(i in TimeTableData.stringToTimeTableData(tableData))
-                timeTableData.add(i)
-            /*
-            var ablrData = "18 50 19 40 note1 19 50 20 40 note1 20 50 21 30 note1 21 40 23 59 s15" // => Format
-            for(i in AblrData.stringToAblrData(ablrData))
-                todayAblrTableData.add(i)
-            */
+
             dayOfWeek = Calendar.getInstance().get(Calendar.DAY_OF_WEEK)
             var ablrData = sharedPref.getString("ablr$dayOfWeek", "")!!
-            for(i in AblrData.stringToAblrData(ablrData))
+            for (i in AblrData.stringToAblrData(ablrData))
                 todayAblrTableData.add(i)
             ablrID = sharedPref.getString("ablrID", "")!!
             ablrPW = sharedPref.getString("ablrPW", "")!!
@@ -87,6 +72,27 @@ class DataManager {
             noTempDataInHomeFragment = sharedPref.getBoolean("noTempDataInHomeFragment", false)
             tmpAblrData = mutableListOf()
             tmpAblrData.addAll(todayAblrTableData)
+            loadNetworkData()
+        }
+
+        fun loadNetworkData() {
+            var tableData = ""
+            CoroutineScope(Dispatchers.Default).launch {
+                val doc = Jsoup.connect("http://20.41.76.129/api/timetable/${classInfo[0]}/${classInfo[2]}")
+                    .ignoreContentType(true).get()
+                tableData = doc.body().text()
+            }
+            while (tableData == "") {
+                Thread.sleep(1)
+            }
+            weeklyTimeTableData = TimeTableData.stringToTimeTableData(tableData)
+            timeTableData = weeklyTimeTableData[dayOfWeek - 1]
+            Log.e("asdf", (dayOfWeek - 1).toString())
+            for(x in weeklyTimeTableData){
+                for(y in x){
+                    Log.e("asdf", "${weeklyTimeTableData.indexOf(x)} ${y.toString()}")
+                }
+            }
         }
     }
 }

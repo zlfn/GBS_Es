@@ -67,8 +67,6 @@ class HomeFragment : Fragment() {
                 intent.putExtra("ablr", AblrData.ablrDataToString(DataManager.todayAblrTableData))
             else intent.putExtra("ablr", AblrData.ablrDataToString(DataManager.tmpAblrData))
             startForegroundService(activity as MainActivity, intent)
-            //startActivity(Intent(activity, EditAblrActivity::class.java).putExtra("edt", 1))
-            //startActivity(Intent(activity, EditAblrActivity::class.java))
         }
 
         initAblrTable()
@@ -141,6 +139,7 @@ class HomeFragment : Fragment() {
     }
 
     class TimeTableRow(context: Context, timeTableData: TimeTableData): TableRow(context) {
+        var timeIndex: TextView = TextView(context)
         var timeInfo: TextView = TextView(context)
         var subjectInfo: TextView = TextView(context)
         var tInfo: TextView = TextView(context)
@@ -149,6 +148,7 @@ class HomeFragment : Fragment() {
 
         private fun addView() {
             super.removeAllViews()
+            super.addView(timeIndex)
             super.addView(timeInfo)
             super.addView(subjectInfo)
             super.addView(tInfo)
@@ -157,6 +157,7 @@ class HomeFragment : Fragment() {
         }
 
         init {
+            timeIndex.text = timeTableData.timeidx
             timeInfo.text = timeTableData.timeInfo
             subjectInfo.text = timeTableData.subjectInfo
             tInfo.text = timeTableData.teacherInfo
