@@ -4,21 +4,6 @@ import android.util.Log
 
 data class TimeTableData(val timeidx: String, val timeInfo: String, val subjectInfo: String, val teacherInfo: String, val roomInfo: String, val elseInfo: String) {
     companion object {
-        /*
-        fun stringToTimeTableData(s: String): MutableList<TimeTableData> {
-            val rtn = mutableListOf<TimeTableData>()
-            val psdat = s.split(' ')
-            for (i in psdat.indices step (5)) {
-                rtn.add(TimeTableData(
-                        timeInfo = psdat[i].replace('_', ' '),
-                        subjectInfo = psdat[i + 1].replace('_', ' '),
-                        teacherInfo = psdat[i + 2].replace('_', ' '),
-                        roomInfo = psdat[i + 3].replace('_', ' '),
-                        elseInfo = psdat[i + 4].replace('_', ' ')))
-            }
-            return rtn
-        }
-         */
         fun stringToTimeTableData(s: String): MutableList<MutableList<TimeTableData>> {
             Log.d("asdf", s)
             val rtn = mutableListOf(mutableListOf<TimeTableData>())

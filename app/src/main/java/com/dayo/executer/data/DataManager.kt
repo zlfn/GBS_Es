@@ -7,9 +7,13 @@ import com.dayo.executer.App
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 import org.jsoup.Jsoup
+import org.jsoup.nodes.Document
+import org.jsoup.select.Elements
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 class DataManager {
     companion object {
@@ -17,6 +21,7 @@ class DataManager {
         var timeTableData = mutableListOf<TimeTableData>()
         var todayAblrTableData = mutableListOf<AblrData>()
         var tmpAblrData = mutableListOf<AblrData>()
+        var mealData = mutableListOf<MutableList<MealData>>()
 
         private val sharedPref = App.appContext!!.getSharedPreferences("settings", MODE_PRIVATE)
         var ablrID = ""
@@ -78,19 +83,38 @@ class DataManager {
         fun loadNetworkData() {
             var tableData = ""
             CoroutineScope(Dispatchers.Default).launch {
-                val doc = Jsoup.connect("http://20.41.76.129/api/timetable/${classInfo[0]}/${classInfo[2]}")
-                    .ignoreContentType(true).get()
+                val doc =
+                    Jsoup.connect("http://20.41.76.129/api/timetable/${classInfo[0]}/${classInfo[2]}")
+                        .ignoreContentType(true).get()
                 tableData = doc.body().text()
             }
-            while (tableData == "") {
-                Thread.sleep(1)
-            }
+            while (tableData == "")
+                Thread.sleep(100)
+
             weeklyTimeTableData = TimeTableData.stringToTimeTableData(tableData)
             timeTableData = weeklyTimeTableData[dayOfWeek - 1]
-            Log.e("asdf", (dayOfWeek - 1).toString())
-            for(x in weeklyTimeTableData){
-                for(y in x){
-                    Log.e("asdf", "${weeklyTimeTableData.indexOf(x)} ${y.toString()}")
+
+            var mdt = ""
+            CoroutineScope(Dispatchers.Default).launch {
+                val doc = Jsoup.connect("http://20.41.76.129/api/meal/")
+                    .ignoreContentType(true).get()
+                mdt = doc.body().text()
+                Log.d("asdf", mdt)
+            }
+            while(mdt == "")
+                Thread.sleep(100)
+            mdt = mdt.substring(1, mdt.length - 2)
+            var idx = 0
+            mealData.add(mutableListOf())
+            for(x in mdt.split(' ')){
+                if(x == "*|") {
+                    mealData.add(mutableListOf())
+                    Log.d("asdf", mealData[idx].joinToString())
+                    idx++
+                    if(idx == 3) break
+                }
+                else{
+                    mealData[idx].add(MealData.stringToMealData(x))
                 }
             }
         }

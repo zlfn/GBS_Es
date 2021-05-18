@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat.startForegroundService
 import com.dayo.executer.*
 import com.dayo.executer.data.AblrData
 import com.dayo.executer.data.DataManager
+import com.dayo.executer.data.MealData
 import com.dayo.executer.data.TimeTableData
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -36,13 +37,14 @@ class HomeFragment : Fragment() {
         val timeTable = view?.findViewById<TableLayout>(R.id.timeTable)
         val asckBtn = view?.findViewById<Button>(R.id.sckBtn)
         val applyAblrBtn = view?.findViewById<Button>(R.id.applyAblrBtn)
+        val mealTable = view?.findViewById<TableLayout>(R.id.mealTable)
 
         timeTable?.removeAllViews()
 
         sv?.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
-            if (oldScrollY - 10 > scrollY)
+            if (oldScrollY - 5 > scrollY)
                 nav.visibility = View.INVISIBLE
-            else if (oldScrollY + 10 < scrollY)
+            else if (oldScrollY + 5 < scrollY)
                 nav.visibility = View.VISIBLE
         }
 
@@ -69,9 +71,17 @@ class HomeFragment : Fragment() {
             startForegroundService(activity as MainActivity, intent)
         }
 
+        mealTable?.removeAllViews()
+        for(i in DataManager.mealData){
+            for(j in i){
+                mealTable?.addView(MealTableRow(activity as MainActivity, j))
+            }
+            mealTable?.addView(BlankTableRow(activity as MainActivity))
+        }
+
         initAblrTable()
 
-        view?.findViewById<FloatingActionButton>(R.id.addAblrDataFab)!!.setOnClickListener {
+        m.findViewById<FloatingActionButton>(R.id.addAblrDataFab)!!.setOnClickListener {
             val intent = Intent(activity, EditAblrActivity::class.java)
             if(!DataManager.noTempDataInHomeFragment)
                 intent.putExtra("dataInfo", "tmp")
@@ -115,11 +125,40 @@ class HomeFragment : Fragment() {
         initUI()
     }
 
+    class TextRow(context: Context, text: String): TableRow(context) {
+        val space = TextView(context)
+        private fun addView(){
+            super.removeAllViews()
+            super.addView(space)
+        }
+        init{
+            space.text = text
+            addView()
+        }
+    }
+
+    fun BlankTableRow(context: Context): TableRow{
+        return TextRow(context, " ")
+    }
+
+    class MealTableRow(context: Context, mealData: MealData): TableRow(context) {
+        var mealInfo: TextView = TextView(context)
+
+        private fun addView(){
+            super.removeAllViews()
+            super.addView(mealInfo)
+        }
+        init{
+            mealInfo.text = mealData.menu
+            addView()
+        }
+    }
+
     class AblrTableRow(context: Context, ablrData: AblrData): TableRow(context) {
         var timeInfo: TextView = TextView(context)
         var subjectInfo: TextView = TextView(context)
-        public var editBtn: Button = Button(context)
-        public var removeBtn: Button = Button(context)
+        var editBtn: Button = Button(context)
+        var removeBtn: Button = Button(context)
 
         private fun addView() {
             super.removeAllViews()
