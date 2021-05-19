@@ -90,10 +90,17 @@ class DataManager {
             }
             while (tableData == "")
                 Thread.sleep(100)
-
-            weeklyTimeTableData = TimeTableData.stringToTimeTableData(tableData)
-            timeTableData = weeklyTimeTableData[dayOfWeek - 1]
-
+            tableData = tableData.substring(1, tableData.length - 2)
+            Log.d("asdf", tableData)
+            if(tableData == "not parsed yet"){
+                timeTableData.add(TimeTableData("서버 오류!", "", "", "", "", ""))
+            }
+            else {
+                weeklyTimeTableData = TimeTableData.stringToTimeTableData(tableData)
+                timeTableData = weeklyTimeTableData[dayOfWeek - 1]
+                if (timeTableData.size == 0)
+                    timeTableData.add(TimeTableData("정규수업이 없습니다!", "", "", "", "", ""))
+            }
             var mdt = ""
             CoroutineScope(Dispatchers.Default).launch {
                 val doc = Jsoup.connect("http://20.41.76.129/api/meal/")
@@ -105,16 +112,23 @@ class DataManager {
                 Thread.sleep(100)
             mdt = mdt.substring(1, mdt.length - 2)
             var idx = 0
-            mealData.add(mutableListOf())
-            for(x in mdt.split(' ')){
-                if(x == "*|") {
-                    mealData.add(mutableListOf())
-                    Log.d("asdf", mealData[idx].joinToString())
-                    idx++
-                    if(idx == 3) break
-                }
-                else{
-                    mealData[idx].add(MealData.stringToMealData(x))
+            if(mdt == "not parsed yet"){
+                mealData.add(mutableListOf(MealData("서버 오류!", MealData.allFalseList)))
+            }
+            else if(mdt == ""){
+                mealData.add(mutableListOf(MealData("급식 정보가 없습니다.", MealData.allFalseList)))
+            }
+            else {
+                mealData.add(mutableListOf())
+                for (x in mdt.split(' ')) {
+                    if (x == "*|") {
+                        mealData.add(mutableListOf())
+                        Log.d("asdf", mealData[idx].joinToString())
+                        idx++
+                        if (idx == 3) break
+                    } else {
+                        mealData[idx].add(MealData.stringToMealData(x))
+                    }
                 }
             }
         }

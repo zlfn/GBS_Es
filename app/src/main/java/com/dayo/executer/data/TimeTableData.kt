@@ -8,7 +8,7 @@ data class TimeTableData(val timeidx: String, val timeInfo: String, val subjectI
             Log.d("asdf", s)
             val rtn = mutableListOf(mutableListOf<TimeTableData>())
             rtn.add(mutableListOf())
-            val psdat = s.substring(1, s.length - 2)
+            val psdat = s
             var idx = 1
             for(i in psdat.split('`')){
                 rtn.add(mutableListOf())
