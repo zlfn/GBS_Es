@@ -43,7 +43,7 @@ class HomeFragment : Fragment() {
 
         sv?.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
             if (oldScrollY - 5 > scrollY)
-                nav.visibility = View.INVISIBLE
+                nav.visibility = View.GONE
             else if (oldScrollY + 5 < scrollY)
                 nav.visibility = View.VISIBLE
         }
