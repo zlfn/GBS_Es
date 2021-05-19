@@ -91,7 +91,7 @@ class DataManager {
             }
             while (tableData == "")
                 Thread.sleep(100)
-            tableData = tableData.substring(1, tableData.length - 2)
+            tableData = tableData.substring(1, tableData.length - 1)
             Log.d("asdf", tableData)
             if(tableData == "not parsed yet"){
                 timeTableData.add(TimeTableData("서버 오류!", "", "", "", "", ""))
@@ -111,9 +111,9 @@ class DataManager {
             }
             while(mdt == "")
                 Thread.sleep(100)
-            mdt = mdt.substring(1, mdt.length - 2)
+            mdt = mdt.substring(1, mdt.length - 1)
             var idx = 0
-            if(mdt == "not parsed yet"){
+            if(mdt == "Not parsed yet"){
                 mealData.add(mutableListOf(MealData("서버 오류!", MealData.allFalseList)))
             }
             else if(mdt == ""){
