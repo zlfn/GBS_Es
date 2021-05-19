@@ -60,6 +60,7 @@ class DataManager {
 
         fun loadSettings() {
             todayAblrTableData = mutableListOf()
+            mealData = mutableListOf()
 
             dayOfWeek = Calendar.getInstance().get(Calendar.DAY_OF_WEEK)
             var ablrData = sharedPref.getString("ablr$dayOfWeek", "")!!
