@@ -50,11 +50,13 @@
             android:layout_height="300dp"
             android:background="#444444">
 
-            <TextView
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/search_view"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:text="개발중입니다"
-                android:textSize="20dp" />
+                android:layout_height="wrap_content"
+                app:iconifiedByDefault="false"
+                app:queryHint="어디로 가고 싶으신가요?"/>
+
         </RelativeLayout>
 
     </LinearLayout>
