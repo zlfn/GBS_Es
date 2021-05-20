@@ -17,6 +17,12 @@
             app:title="비밀번호"
             app:key="ablrPW"
             app:summary="스마트 기숙관리 시스템의 비밀번호를 입력하세요." />
+        <SwitchPreference
+            app:title="Home에서 편집한 데이터를 영구히 저장"
+            app:key="saveHomeFragmentEditedData"
+            app:summaryOn="Home에서 편집한 데이터를 자동으로 동기화합니다."
+            app:summaryOff="Home에서 편집한 데이터를 자동으로 동기화하지 않습니다.\n설정시 기존 데이터는 사라집니다." />
+
     </PreferenceCategory>
 
     <PreferenceCategory app:title="자가진단 자동화">

@@ -23,6 +23,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         val ablrIDPreference = findPreference<EditTextPreference>("ablrID")!!
         val ablrPWPreference = findPreference<EditTextPreference>("ablrPW")!!
+        val saveHomeEditedData = findPreference<SwitchPreference>("saveHomeFragmentEditedData")!!
 
         val asckPWPreference = findPreference<EditTextPreference>("asckPW")!!
         val asckUseAdvOptPreference = findPreference<SwitchPreference>("asckAdv")!!
@@ -38,6 +39,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         ablrIDPreference.text = DataManager.ablrID
         ablrPWPreference.text = DataManager.ablrPW
+        saveHomeEditedData.isChecked = DataManager.noTempDataInHomeFragment
 
         asckPWPreference.text = DataManager.asckPW
         asckUseAdvOptPreference.isChecked = DataManager.asckUseAdvOpt
@@ -47,6 +49,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         classPreferences.setOnPreferenceChangeListener { _, newValue ->
             DataManager.classInfo = newValue.toString()
+            DataManager.saveSettings()
+            DataManager.loadSettings()
             true
         }
 
@@ -57,6 +61,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         ablrPWPreference.setOnPreferenceChangeListener { _, newValue ->
             DataManager.ablrPW = newValue.toString()
+            true
+        }
+
+        saveHomeEditedData.setOnPreferenceChangeListener { _, newValue ->
+            DataManager.tmpAblrData = mutableListOf()
+            DataManager.tmpAblrData.addAll(DataManager.todayAblrTableData)
+            DataManager.noTempDataInHomeFragment = newValue as Boolean
             true
         }
 
