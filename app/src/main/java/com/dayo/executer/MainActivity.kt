@@ -21,6 +21,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import com.dayo.executer.data.DataManager
 import com.dayo.executer.ui.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.sothree.slidinguppanel.SlidingUpPanelLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -62,6 +63,7 @@ class MainActivity : AppCompatActivity() {
       
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setOnNavigationItemSelectedListener (mnavviewitemselectedListener)
+        navView.setOnNavigationItemReselectedListener (mnavviewitemreselectedListener)
         //navView.setupWithNavController(navController)
 
         try {
@@ -75,6 +77,18 @@ class MainActivity : AppCompatActivity() {
         }
 
         Toast.makeText(this, "버전 정보를 불러오고 있습니다.", Toast.LENGTH_SHORT).show()
+    }
+
+    val mnavviewitemreselectedListener = BottomNavigationView.OnNavigationItemReselectedListener { item->
+        when(item.itemId) {
+            R.id.navigation_map -> {
+                var drawer: SlidingUpPanelLayout = findViewById(R.id.main_panel)
+                if(drawer.panelState != SlidingUpPanelLayout.PanelState.DRAGGING)
+                drawer.setPanelState(SlidingUpPanelLayout.PanelState.ANCHORED)
+                true
+            }
+        }
+        false
     }
 
     val mnavviewitemselectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item->
